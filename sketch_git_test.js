@@ -1,4 +1,5 @@
 function setup() {
+    // Note to self 
 
     createCanvas(100, 200);
 
