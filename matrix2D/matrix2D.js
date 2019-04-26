@@ -1,4 +1,4 @@
-class matrix2D {
+class Matrix2D {
 
     constructor(rows, cols) {
 
