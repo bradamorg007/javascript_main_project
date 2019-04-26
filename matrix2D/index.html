@@ -13,6 +13,7 @@
 	<script src="libraries/p5.sound.js"></script>
 	<script src="sketch.js"></script>
 	<script src="Matrix2D.js"></script>
+	<script src="plotly-latest.min.js"></script>
 
 	<style>
 		body {
@@ -25,6 +26,15 @@
 			margin: auto;
 		}
 	</style>
+
+	<div> id="chart"> </div>
+
+	<script>
+		function getData() {
+			return Matrix2D.gaussian(0, 1, 1000);
+		}
+	</script>
+
 </head>
 
 <body>
