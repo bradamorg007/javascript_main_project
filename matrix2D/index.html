@@ -11,9 +11,11 @@
 	<script src="libraries/p5.js"></script>
 	<script src="libraries/p5.dom.js"></script>
 	<script src="libraries/p5.sound.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<script src="sketch.js"></script>
 	<script src="Matrix2D.js"></script>
-	<script src="plotly-latest.min.js"></script>
+	<script src="Random.js"></script>
+
 
 	<style>
 		body {
@@ -27,12 +29,16 @@
 		}
 	</style>
 
-	<div> id="chart"> </div>
+	<div id="myDiv"></div>
 
 	<script>
-		function getData() {
-			return Matrix2D.gaussian(0, 1, 1000);
-		}
+		let x = Random.gaussian(0, 1, 1000);
+		let trace = {
+			x: x,
+			type: 'histogram',
+		};
+		let data = [trace];
+		Plotly.newPlot('myDiv', data);
 	</script>
 
 </head>
