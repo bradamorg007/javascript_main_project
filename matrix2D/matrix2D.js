@@ -1,22 +1,357 @@
+// MATHS OPERATION FUNCTIONS
+// scalars
+// add, multply, subtract
+
+// element wise 
+// add, multiply, substract
+// need a check function to see if the the dimesnions match up
+
+// dot product multplication between matrices and vectors
+// need a check function to make sure the dimensions match up
+
+// GPU implementations of the above mathematical operations
+
+// OTHER FUNCTIONS
+
+// get size function
+// flatten function 
+// transpose function
+// Print matrices 
+// init matrix - use random generation using int, normal distribution,
+// gaussian, xaviar or he_normal distributions
+// Or user specified data input 
+
 class Matrix2D {
 
     constructor(rows, cols) {
 
+        if (rows == 0 || cols == 0) {
+            throw new Error("Illegal Argument Exception: rows or cols can not be set to 0");
+        }
+
         this.rows = rows;
         this.cols = cols;
+        this.previousRows = 0;
+        this.previousCols = 0;
         this.data = [];
 
     }
 
 
-    print() {
+    printMatrices(...data) {
         console.table(this.data);
+
+        if (data.length > 0) {
+            for (let i = 0; i < data.length; i++) {
+                console.table(data[i].data);
+            }
+        }
+    }
+
+
+    flatten(flatternType) {
+
+        if (flatternType == undefined) {
+            throw new Error("Illegal Argument Exception: flattenType undefined");
+        }
+
+        if (this.data.length == 0) {
+            throw new Error("Illegal Argument Exception: NOTHING TO FLATTEN Object data is empty");
+        }
+
+        if (this.size.rows == 1 || this.size.cols == 1) {
+            return;
+        }
+        // if C style flatten by rows. so first go through all the values
+        // for row one then row 2 and so on.
+        // if F style (fortran) then go by collumns first
+        let size = this.size();
+        let output = [...Array(size.rows * size.cols)];
+        this.previousRows = this.rows;
+        this.previousCols = this.cols;
+        this.rows = 1;
+        this.cols = size.rows * size.cols;
+
+
+        let count = 0;
+        switch (flatternType) {
+
+            case "C":
+
+                for (let i = 0; i < size.cols; i++) {
+                    for (let j = 0; j < size.rows; j++) {
+                        output[count] = this.data[j][i];
+                        count++;
+                    }
+                }
+
+                this.data = output;
+                break;
+
+            case "F":
+                for (let i = 0; i < size.rows; i++) {
+                    for (let j = 0; j < size.cols; j++) {
+                        output[count] = this.data[i][j];
+                        count++;
+                    }
+                }
+
+                this.data = output;
+                break;
+        }
+
+
+    }
+
+
+    unFlatten(flatternType) {
+
+        if (flatternType == undefined) {
+            throw new Error("Illegal Argument Exception: flattenType undefined");
+        }
+
+        if (this.data.length == 0) {
+            throw new Error("Illegal Argument Exception: NOTHING TO FLATTEN Object data is empty");
+        }
+
+        if (this.previousRows == 0 || this.previousCols == 0) {
+            throw new Error("Illegal Argument Exception: NOTHING TO UNFLATTEN data is already a 2D matrix");
+        }
+
+        if (this.size.rows > 1 && this.size.cols > 1) {
+            return;
+        }
+        // if C style flatten by rows. so first go through all the values
+        // for row one then row 2 and so on.
+        // if F style (fortran) then go by collumns first
+        let size = this.size();
+        let output = Array(this.previousRows).fill(null).map(() => Array(this.previousCols).fill(null));
+        this.rows = this.previousRows;
+        this.cols = this.previousCols;
+
+
+        let count = 0;
+        switch (flatternType) {
+
+            case "C":
+                for (let i = 0; i < this.previousCols; i++) {
+                    for (let j = 0; j < this.previousRows; j++) {
+                        output[j][i] = this.data[count];
+                        count++;
+                    }
+                }
+
+                this.data = output;
+                break;
+
+            case "F":
+                for (let i = 0; i < this.previousRows; i++) {
+                    for (let j = 0; j < this.previousCols; j++) {
+                        output[i][j] = this.data[count];
+                        count++;
+                    }
+                }
+
+                this.data = output;
+                break;
+        }
+
+        this.previousRows = 0;
+        this.previousCols = 0;
+
+
+    }
+
+    // GETTERS AND SETTERS
+
+    size() {
+        return {
+            rows: this.rows,
+            cols: this.cols
+        };
     }
 
 
 
+    setData(data) {
+        // check data dimensions matches rows and columsms 
+        this.data = data;
+    }
 
 
+    // INIT FUNCTIONS
+    integer(max) {
+        // initialise matric with set of values 
+        let size = this.size();
+        for (let i = 0; i < size.rows; i++) {
+            this.data[i] = [];
+            for (let j = 0; j < size.cols; j++) {
+                this.data[i][j] = Math.floor(Math.random() * Math.floor(max));
+            }
+        }
+    }
+
+    normal() {
+
+        let size = this.size();
+
+        if (size.rows == 1 && size.cols == 1) {
+            return gaussian_distribution(0, 1, 1);
+        }
+        for (let i = 0; i < size.rows; i++) {
+            this.data[i] = [];
+            for (let j = 0; j < size.cols; j++) {
+                this.data[i][j] = Matrix2D.gaussian_distribution(0, 1, 1);
+            }
+        }
+    }
+
+    he_normal() {
+
+        // For RELU 
+        let mean = 0;
+        let sigma = 1;
+        let samples = 1;
+        let cuttoff = 2;
+        let size = this.size();
+
+        if (size.rows == 1 && size.cols == 1) {
+            let draw = Matrix2D.truncated_gaussian_distribution(mean, sigma, samples, cuttoff);
+            return draw * Math.sqrt(2 / (size.cols));
+        }
+        for (let i = 0; i < size.rows; i++) {
+            this.data[i] = [];
+            for (let j = 0; j < size.cols; j++) {
+                let draw = Matrix2D.truncated_gaussian_distribution(mean, sigma, samples, cuttoff);
+                this.data[i][j] = draw * Math.sqrt(2 / (size.cols));
+            }
+        }
+    }
+
+    // Make truncated normal function this where all values greater than 2stds from the
+    // the means of 0 will be disgarded and redrawn
+    // xavier and he normal will draw from a truncated normal then times its value by sqr(2 or 1 / cols -1)
+
+
+    xavier_normal() {
+
+        // For Tanh
+        // Weight Matrix = rows = neurons - cols = number of weights connected to the neuron
+        // the weight matrix shape is defined. W = [rows = number of neurons in current Layer, cols number of neurons in previous layer so the layer before the current layer];
+
+        // First create the normally distributed points;
+        let mean = 0;
+        let sigma = 0.5;
+        let samples = 1;
+        let cuttoff = 2;
+        let size = this.size();
+
+        if (size.rows == 1 && size.cols == 1) {
+            return this.truncated_normal(mean, sigma, samples, cuttoff) * Math.sqrt(1 / (size.cols));
+        }
+        for (let i = 0; i < size.rows; i++) {
+            this.data[i] = [];
+            for (let j = 0; j < size.cols; j++) {
+                let draw = Matrix2D.truncated_gaussian_distribution(mean, sigma, samples, cuttoff);
+                this.data[i][j] = draw * Math.sqrt(1 / (size.cols));
+            }
+        }
+
+    }
+
+    truncated_normal() {
+
+        let mean = 0;
+        let sigma = 1;
+        let samples = 1;
+        let cuttoff = 2;
+        let size = this.size();
+
+        if (size.rows == 1 && size.cols == 1) {
+            return Matrix2D.truncated_gaussian_distribution(mean, sigma, samples, cuttoff);
+        }
+        for (let i = 0; i < size.rows; i++) {
+            this.data[i] = [];
+            for (let j = 0; j < size.cols; j++) {
+                this.data[i][j] = Matrix2D.truncated_gaussian_distribution(mean, sigma, samples, cuttoff);
+            }
+        }
+
+
+    }
+
+    static truncated_gaussian_distribution(mean, sigma, samples, cuttOff) {
+
+        if (!Number.isInteger(samples)) {
+            throw new Error("Gaussian: Number of samples must be an int");
+        }
+
+        if (samples === 0) {
+            throw new Error("Illegal Argument Exception: Sample number must be greater than 0");
+        }
+
+        let output = [...Array(samples)];
+
+        for (let i = 0; i < samples; i++) {
+            let done = false;
+            while (done == false) {
+                let draw = Matrix2D.gaussian_distribution(mean, sigma, 1);
+                if (draw <= (mean + cuttOff) && draw >= (mean - cuttOff)) {
+
+                    output[i] = draw;
+
+                    if (samples === 1) {
+                        return draw;
+                    }
+
+                    done = true;
+                }
+            }
+        }
+
+        return output;
+
+    }
+
+    static gaussian_distribution(mean, sigma, samples) {
+
+        if (!Number.isInteger(samples)) {
+            throw new Error("Gaussian: Number of samples must be an int");
+        }
+        // loop over the number of samples needed
+
+        let two_pi = Math.PI * 2;
+        let output = [];
+
+        for (let i = 0; i < samples / 2; i++) {
+
+            // sample two points from uniform distribution between 0-1
+            let u1 = Math.random();
+            let u2 = Math.random();
+
+            let z = 0;
+            if (u1 != 0) {
+                z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(two_pi * u2);
+                output[i] = (z * sigma) + mean;
+            } else {
+                output[i] = 0;
+            }
+
+            if (samples == 1) {
+                return output[0];
+            }
+
+            if (u2 != 0) {
+                z = Math.sqrt(-2 * Math.log(u1)) * Math.sin(two_pi * u2);
+                output[i + 1] = (z * sigma) + mean;
+            } else {
+                output[i + 1] = 0;
+            }
+
+            i++
+        }
+        return output;
+    }
 
 
 }
