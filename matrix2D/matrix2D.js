@@ -1,7 +1,7 @@
 // MATHS OPERATION FUNCTIONS
 // scalars
 // add, multply, subtract
-
+// Ygit commi
 // element wise 
 // add, multiply, substract *
 // need a check function to see if the the dimesnions match up *
