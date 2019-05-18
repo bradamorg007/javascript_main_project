@@ -25,6 +25,7 @@ function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+
 function checkInputsForMatrixOperation(a, b) {
 
     let aIsScalar = false;
@@ -67,7 +68,7 @@ class Matrix2D {
 
 
 
-    printMatrices(...data) {
+    print(...data) {
         console.table(this.data);
 
         if (data.length > 0) {
@@ -82,8 +83,41 @@ class Matrix2D {
     static dotProduct(a, b) {
 
         // Cols of a == rows of b 
+        let checkOutput = checkInputsForMatrixOperation(a, b);
+
+        let aIsScalar = checkOutput.aIsScalar;
+        let bIsScalar = checkOutput.bIsScalar;
+
+        if (!aIsScalar && !bIsScalar) {
+            if (a.size().cols === b.size().rows) {
+
+                let newMatrix = new Matrix2D(a.size().rows, b.size().cols)
+
+                for (let i = 0; i < newMatrix.size().cols; i++) {
+
+                    for (let j = 0; j < newMatrix.size().rows; j++) {
+                        let sum = 0;
+                        for (let k = 0; k < a.size().cols; k++) {
+                            sum += a.data[j][k] * b.data[k][i];
+                        }
+
+                        newMatrix.data[j][i] = sum;
+
+                    }
+
+                }
+
+                return newMatrix;
+
+            } else {
+                throw new Error("Illegal Argument Exception: dot product requires the cols of a == rows of b ");
+            }
+        } else {
+            throw new Error("Illegal Argument Exception: dot product requires both inputs be Matrix2D Objects");
+        }
 
     }
+
 
     static subtract(a, b) {
 
@@ -110,6 +144,7 @@ class Matrix2D {
                 .map((_, i, j) => a.data[i][j] - b.data[i][j]);
         }
     }
+
 
     static add(a, b) {
 
@@ -201,6 +236,8 @@ class Matrix2D {
 
         return this;
     }
+
+
 
 
     flatten(flatternType) {
