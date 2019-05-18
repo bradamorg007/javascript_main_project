@@ -33,7 +33,7 @@
 	<div id="myDiv"></div>
 
 	<script>
-		let x = new Matrix2D(10, 1000);
+		let x = new Matrix2D(500, 20);
 		x.xavier_normal();
 		x.flatten("C");
 		let l = Matrix2D.truncated_gaussian_distribution(0, 1, 10000, 2);

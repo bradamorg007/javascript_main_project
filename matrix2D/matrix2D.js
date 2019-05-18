@@ -7,19 +7,47 @@
 // need a check function to see if the the dimesnions match up
 
 // dot product multplication between matrices and vectors
-// need a check function to make sure the dimensions match up
+// need a check function to make sure the dimensions match up 
 
 // GPU implementations of the above mathematical operations
 
 // OTHER FUNCTIONS
 
-// get size function
-// flatten function 
-// transpose function
-// Print matrices 
-// init matrix - use random generation using int, normal distribution,
-// gaussian, xaviar or he_normal distributions
+// get size function *
+// flatten function *
+// transpose function *
+// Print matrices *
+// init matrix - use random generation using int, normal distribution,*
+// gaussian, xaviar or he_normal distributions or truncated normal *
 // Or user specified data input 
+
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function checkInputsForMatrixOperation(a, b) {
+
+    let aIsScalar = false;
+    let bIsScalar = false;
+
+    if (!(a instanceof Matrix2D) && isNumeric(a) && !(a instanceof Array)) {
+        aIsScalar = true;
+    }
+
+    if (!(b instanceof Matrix2D) && isNumeric(b) && !(b instanceof Array)) {
+        bIsScalar = true;
+    }
+
+    if (aIsScalar && bIsScalar) {
+        return a * b;
+    }
+
+    return {
+        aIsScalar: aIsScalar,
+        bIsScalar: bIsScalar
+    };
+
+}
 
 class Matrix2D {
 
@@ -33,9 +61,10 @@ class Matrix2D {
         this.cols = cols;
         this.previousRows = 0;
         this.previousCols = 0;
-        this.data = [];
+        this.data = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
 
     }
+
 
 
     printMatrices(...data) {
@@ -46,6 +75,126 @@ class Matrix2D {
                 console.table(data[i].data);
             }
         }
+    }
+
+    // MATH OPERATIONS =====================================================================
+
+
+    static subtract(a, b) {
+
+        checkOutput = checkInputsForMatrixOperation(a, b);
+
+        let aIsScalar = checkOutput.aIsScalar;
+        let bIsScalar = checkOutput.bIsScalar;
+
+        if (aIsScalar && !bIsScalar) {
+            return new Matrix2D(b.size().rows, b.size().cols)
+                .map((_, i, j) => b.data[i][j] - a);
+
+        } else if (!aIsScalar && bIsScalar) {
+            return new Matrix2D(a.size().rows, a.size().cols)
+                .map((_, i, j) => a.data[i][j] - b);
+
+        } else if (!aIsScalar && !bIsScalar) {
+
+            if (a.size().rows !== b.size().rows || a.size().cols !== b.size().cols) {
+                throw new Error("Illegal Argument Exception: Element Wise Operations require input matrices to have the same dimensions");
+            }
+
+            return new Matrix2D(a.size().rows, a.size().cols)
+                .map((_, i, j) => a.data[i][j] - b.data[i][j]);
+        }
+    }
+
+    static add(a, b) {
+
+        checkOutput = checkInputsForMatrixOperation(a, b);
+
+        let aIsScalar = checkOutput.aIsScalar;
+        let bIsScalar = checkOutput.bIsScalar;
+
+        if (aIsScalar && !bIsScalar) {
+            return new Matrix2D(b.size().rows, b.size().cols)
+                .map((_, i, j) => b.data[i][j] + a);
+
+        } else if (!aIsScalar && bIsScalar) {
+            return new Matrix2D(a.size().rows, a.size().cols)
+                .map((_, i, j) => a.data[i][j] + b);
+
+        } else if (!aIsScalar && !bIsScalar) {
+
+            if (a.size().rows !== b.size().rows || a.size().cols !== b.size().cols) {
+                throw new Error("Illegal Argument Exception: Element Wise Operations require input matrices to have the same dimensions");
+            }
+
+            return new Matrix2D(a.size().rows, a.size().cols)
+                .map((_, i, j) => a.data[i][j] + b.data[i][j]);
+        }
+    }
+
+
+    static multiply(a, b) {
+
+        checkOutput = checkInputsForMatrixOperation(a, b);
+
+        let aIsScalar = checkOutput.aIsScalar;
+        let bIsScalar = checkOutput.bIsScalar;
+
+        if (aIsScalar && !bIsScalar) {
+            return new Matrix2D(b.size().rows, b.size().cols)
+                .map((_, i, j) => b.data[i][j] * a);
+
+        } else if (!aIsScalar && bIsScalar) {
+            return new Matrix2D(a.size().rows, a.size().cols)
+                .map((_, i, j) => a.data[i][j] * b);
+
+        } else if (!aIsScalar && !bIsScalar) {
+
+            if (a.size().rows !== b.size().rows || a.size().cols !== b.size().cols) {
+                throw new Error("Illegal Argument Exception: Element Wise Operations require input matrices to have the same dimensions");
+            }
+
+            return new Matrix2D(a.size().rows, a.size().cols)
+                .map((_, i, j) => a.data[i][j] * b.data[i][j]);
+        }
+    }
+
+
+    // =====================================================================================
+
+    transpose() {
+        let m = new Matrix2D(this.size().cols, this.size().rows)
+            .map((_, i, j) => this.data[j][i]);
+
+        this.copy(m);
+    }
+
+
+    copy(matrix) {
+
+        if (matrix instanceof Matrix2D) {
+            this.rows = matrix.size().rows;
+            this.cols = matrix.size().cols;
+            this.previousRows = matrix.previousRows;
+            this.previousCols = matrix.previousCols;
+            this.data = matrix.data;
+        } else {
+            throw new Error("Illegal Argument Exception:" +
+                "Copy requires a Matrix2D object be passed as an argument");
+        }
+    }
+
+
+    map(func) {
+
+        for (let i = 0; i < this.size().rows; i++) {
+            for (let j = 0; j < this.size().cols; j++) {
+                let val = this.data[i][j];
+                this.data[i][j] = func(val, i, j);
+            }
+        }
+
+        return this;
     }
 
 
@@ -59,7 +208,7 @@ class Matrix2D {
             throw new Error("Illegal Argument Exception: NOTHING TO FLATTEN Object data is empty");
         }
 
-        if (this.size.rows == 1 || this.size.cols == 1) {
+        if (this.size().rows == 1 || this.size().cols == 1) {
             return;
         }
         // if C style flatten by rows. so first go through all the values
@@ -71,7 +220,6 @@ class Matrix2D {
         this.previousCols = this.cols;
         this.rows = 1;
         this.cols = size.rows * size.cols;
-
 
         let count = 0;
         switch (flatternType) {
@@ -118,7 +266,7 @@ class Matrix2D {
             throw new Error("Illegal Argument Exception: NOTHING TO UNFLATTEN data is already a 2D matrix");
         }
 
-        if (this.size.rows > 1 && this.size.cols > 1) {
+        if (this.size().rows > 1 && this.size().cols > 1) {
             return;
         }
         // if C style flatten by rows. so first go through all the values
@@ -159,7 +307,6 @@ class Matrix2D {
         this.previousRows = 0;
         this.previousCols = 0;
 
-
     }
 
     // GETTERS AND SETTERS
@@ -170,14 +317,6 @@ class Matrix2D {
             cols: this.cols
         };
     }
-
-
-
-    setData(data) {
-        // check data dimensions matches rows and columsms 
-        this.data = data;
-    }
-
 
     // INIT FUNCTIONS
     integer(max) {
@@ -241,7 +380,7 @@ class Matrix2D {
 
         // First create the normally distributed points;
         let mean = 0;
-        let sigma = 0.5;
+        let sigma = 1;
         let samples = 1;
         let cuttoff = 2;
         let size = this.size();
@@ -276,7 +415,6 @@ class Matrix2D {
                 this.data[i][j] = Matrix2D.truncated_gaussian_distribution(mean, sigma, samples, cuttoff);
             }
         }
-
 
     }
 
@@ -354,4 +492,9 @@ class Matrix2D {
     }
 
 
+
+}
+
+if (typeof module !== 'undefined') {
+    module.exports = Matrix2D;
 }
