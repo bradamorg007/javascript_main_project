@@ -3,11 +3,11 @@
 // add, multply, subtract
 
 // element wise 
-// add, multiply, substract
-// need a check function to see if the the dimesnions match up
+// add, multiply, substract *
+// need a check function to see if the the dimesnions match up *
 
-// dot product multplication between matrices and vectors
-// need a check function to make sure the dimensions match up 
+// dot product multplication between matrices and vectors *
+// need a check function to make sure the dimensions match up * 
 
 // GPU implementations of the above mathematical operations
 
@@ -52,7 +52,7 @@ function checkInputsForMatrixOperation(a, b) {
 
 class Matrix2D {
 
-    constructor(rows, cols) {
+    constructor(rows, cols, input) {
 
         if (rows == 0 || cols == 0) {
             throw new Error("Illegal Argument Exception: rows or cols can not be set to 0");
@@ -62,7 +62,26 @@ class Matrix2D {
         this.cols = cols;
         this.previousRows = 0;
         this.previousCols = 0;
-        this.data = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
+        this.data = [];
+
+        if (input == undefined) {
+            this.data = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
+        } else {
+            if ((rows * cols) !== input.length) {
+                throw new Error("Illegal Argument Exception: The dimensions of the" +
+                    "input data must be compatible with the dimensions of the rows and cols");
+            }
+
+            let count = 0;
+            for (let i = 0; i < rows; i++) {
+                this.data[i] = [];
+                for (let j = 0; j < cols; j++) {
+                    this.data[i][j] = input[count];
+                    count++;
+                }
+            }
+        }
+
 
     }
 
@@ -91,23 +110,21 @@ class Matrix2D {
         if (!aIsScalar && !bIsScalar) {
             if (a.size().cols === b.size().rows) {
 
-                let newMatrix = new Matrix2D(a.size().rows, b.size().cols)
-
-                for (let i = 0; i < newMatrix.size().cols; i++) {
-
-                    for (let j = 0; j < newMatrix.size().rows; j++) {
+                // This will make a new Matrix equal to the size of the matrix product 
+                // given sizes of a and b. then the map function will iterate over 
+                // all the element positions of the matrix and apply the below function to each element
+                // the rows of the new matrix product will be equal to the rows of a. 
+                // the columns of the new matrix product will be equal to the columns of b
+                // The columns a must == rows of b, thus k can be used to index both the 
+                // values in the columsn of a with the values in the rows of b....AHHHH! BRAIN 
+                return new Matrix2D(a.size().rows, b.size().cols)
+                    .map((e, i, j) => {
                         let sum = 0;
                         for (let k = 0; k < a.size().cols; k++) {
-                            sum += a.data[j][k] * b.data[k][i];
+                            sum += a.data[i][k] * b.data[k][j];
                         }
-
-                        newMatrix.data[j][i] = sum;
-
-                    }
-
-                }
-
-                return newMatrix;
+                        return sum;
+                    });
 
             } else {
                 throw new Error("Illegal Argument Exception: dot product requires the cols of a == rows of b ");
@@ -200,7 +217,19 @@ class Matrix2D {
     }
 
 
-    // =====================================================================================
+    // OTHER FUNCTIONS =====================================================================================
+
+    map(func) {
+
+        for (let i = 0; i < this.size().rows; i++) {
+            for (let j = 0; j < this.size().cols; j++) {
+                let val = this.data[i][j];
+                this.data[i][j] = func(val, i, j);
+            }
+        }
+
+        return this;
+    }
 
     transpose() {
         let m = new Matrix2D(this.size().cols, this.size().rows)
@@ -225,21 +254,6 @@ class Matrix2D {
     }
 
 
-    map(func) {
-
-        for (let i = 0; i < this.size().rows; i++) {
-            for (let j = 0; j < this.size().cols; j++) {
-                let val = this.data[i][j];
-                this.data[i][j] = func(val, i, j);
-            }
-        }
-
-        return this;
-    }
-
-
-
-
     flatten(flatternType) {
 
         if (flatternType == undefined) {
@@ -260,8 +274,8 @@ class Matrix2D {
         let output = [...Array(size.rows * size.cols)];
         this.previousRows = this.rows;
         this.previousCols = this.cols;
-        this.rows = 1;
-        this.cols = size.rows * size.cols;
+        this.rows = size.rows * size.cols;
+        this.cols = 1;
 
         let count = 0;
         switch (flatternType) {
@@ -351,6 +365,18 @@ class Matrix2D {
 
     }
 
+
+    toArray() {
+
+        let output = [];
+        for (let i = 0; i < this.size.rows; i++) {
+            for (let j = 0; j < this.size.cols; j++) {
+                output.push(this.data[i][j]);
+            }
+        }
+        return output;
+    }
+
     // GETTERS AND SETTERS
 
     size() {
@@ -360,7 +386,11 @@ class Matrix2D {
         };
     }
 
-    // INIT FUNCTIONS
+
+
+
+    // INIT MATRIX ELEMENTS FUNCTIONS =================================================
+
     integer(max) {
         // initialise matric with set of values 
         let size = this.size();
