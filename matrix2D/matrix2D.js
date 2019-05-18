@@ -79,10 +79,15 @@ class Matrix2D {
 
     // MATH OPERATIONS =====================================================================
 
+    static dotProduct(a, b) {
+
+        // Cols of a == rows of b 
+
+    }
 
     static subtract(a, b) {
 
-        checkOutput = checkInputsForMatrixOperation(a, b);
+        let checkOutput = checkInputsForMatrixOperation(a, b);
 
         let aIsScalar = checkOutput.aIsScalar;
         let bIsScalar = checkOutput.bIsScalar;
@@ -108,7 +113,7 @@ class Matrix2D {
 
     static add(a, b) {
 
-        checkOutput = checkInputsForMatrixOperation(a, b);
+        let checkOutput = checkInputsForMatrixOperation(a, b);
 
         let aIsScalar = checkOutput.aIsScalar;
         let bIsScalar = checkOutput.bIsScalar;
@@ -135,7 +140,7 @@ class Matrix2D {
 
     static multiply(a, b) {
 
-        checkOutput = checkInputsForMatrixOperation(a, b);
+        let checkOutput = checkInputsForMatrixOperation(a, b);
 
         let aIsScalar = checkOutput.aIsScalar;
         let bIsScalar = checkOutput.bIsScalar;
