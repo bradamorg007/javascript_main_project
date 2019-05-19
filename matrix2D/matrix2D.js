@@ -63,6 +63,7 @@ class Matrix2D {
         this.previousRows = 0;
         this.previousCols = 0;
         this.data = [];
+        this.flattenType = "N";
 
         if (input == undefined) {
             this.data = Array(this.rows).fill().map(() => Array(this.cols).fill(0));
@@ -84,7 +85,6 @@ class Matrix2D {
 
 
     }
-
 
 
     print(...data) {
@@ -231,21 +231,24 @@ class Matrix2D {
         return this;
     }
 
+
     transpose() {
         let m = new Matrix2D(this.size().cols, this.size().rows)
             .map((_, i, j) => this.data[j][i]);
 
-        this.copy(m);
+        this.copy(m, true);
     }
 
 
-    copy(matrix) {
+    copy(matrix, keepHistory) {
 
         if (matrix instanceof Matrix2D) {
             this.rows = matrix.size().rows;
             this.cols = matrix.size().cols;
-            this.previousRows = matrix.previousRows;
-            this.previousCols = matrix.previousCols;
+            if (keepHistory === false || keepHistory === undefined) {
+                this.previousRows = matrix.previousRows;
+                this.previousCols = matrix.previousCols;
+            }
             this.data = matrix.data;
         } else {
             throw new Error("Illegal Argument Exception:" +
@@ -271,7 +274,8 @@ class Matrix2D {
         // for row one then row 2 and so on.
         // if F style (fortran) then go by collumns first
         let size = this.size();
-        let output = [...Array(size.rows * size.cols)];
+
+        let output = new Matrix2D(size.rows * size.cols, 1);
         this.previousRows = this.rows;
         this.previousCols = this.cols;
         this.rows = size.rows * size.cols;
@@ -284,26 +288,25 @@ class Matrix2D {
 
                 for (let i = 0; i < size.cols; i++) {
                     for (let j = 0; j < size.rows; j++) {
-                        output[count] = this.data[j][i];
+                        output.data[count][0] = this.data[j][i];
                         count++;
                     }
                 }
 
-                this.data = output;
+                this.data = output.data;
                 break;
 
             case "F":
                 for (let i = 0; i < size.rows; i++) {
                     for (let j = 0; j < size.cols; j++) {
-                        output[count] = this.data[i][j];
+                        output.data[count][0] = this.data[i][j];
                         count++;
                     }
                 }
 
-                this.data = output;
+                this.data = output.data;
                 break;
         }
-
 
     }
 
@@ -329,7 +332,7 @@ class Matrix2D {
         // for row one then row 2 and so on.
         // if F style (fortran) then go by collumns first
         let size = this.size();
-        let output = Array(this.previousRows).fill(null).map(() => Array(this.previousCols).fill(null));
+        let output = new Matrix2D(this.previousRows, this.previousCols);
         this.rows = this.previousRows;
         this.cols = this.previousCols;
 
@@ -340,23 +343,35 @@ class Matrix2D {
             case "C":
                 for (let i = 0; i < this.previousCols; i++) {
                     for (let j = 0; j < this.previousRows; j++) {
-                        output[j][i] = this.data[count];
+
+                        if (size.rows === 1 && size.cols > 1) {
+                            output.data[j][i] = this.data[0][count];
+
+                        } else if (size.rows > 1 && size.cols === 1) {
+                            output.data[j][i] = this.data[count][0];
+                        }
                         count++;
                     }
                 }
 
-                this.data = output;
+                this.data = output.data;
                 break;
 
             case "F":
                 for (let i = 0; i < this.previousRows; i++) {
                     for (let j = 0; j < this.previousCols; j++) {
-                        output[i][j] = this.data[count];
+
+                        if (size.rows === 1 && size.cols > 1) {
+                            output.data[i][j] = this.data[0][count];
+
+                        } else if (size.rows > 1 && size.cols === 1) {
+                            output.data[i][j] = this.data[count][0];
+                        }
                         count++;
                     }
                 }
 
-                this.data = output;
+                this.data = output.data;
                 break;
         }
 
@@ -369,8 +384,8 @@ class Matrix2D {
     toArray() {
 
         let output = [];
-        for (let i = 0; i < this.size.rows; i++) {
-            for (let j = 0; j < this.size.cols; j++) {
+        for (let i = 0; i < this.size().rows; i++) {
+            for (let j = 0; j < this.size().cols; j++) {
                 output.push(this.data[i][j]);
             }
         }
@@ -388,7 +403,6 @@ class Matrix2D {
 
 
 
-
     // INIT MATRIX ELEMENTS FUNCTIONS =================================================
 
     integer(max) {
@@ -401,6 +415,7 @@ class Matrix2D {
             }
         }
     }
+
 
     normal() {
 
@@ -416,6 +431,7 @@ class Matrix2D {
             }
         }
     }
+
 
     he_normal() {
 
@@ -470,6 +486,7 @@ class Matrix2D {
 
     }
 
+
     truncated_normal() {
 
         let mean = 0;
@@ -489,6 +506,7 @@ class Matrix2D {
         }
 
     }
+
 
     static truncated_gaussian_distribution(mean, sigma, samples, cuttOff) {
 
@@ -522,6 +540,7 @@ class Matrix2D {
         return output;
 
     }
+
 
     static gaussian_distribution(mean, sigma, samples) {
 

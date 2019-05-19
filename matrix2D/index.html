@@ -38,7 +38,7 @@
 		x.flatten("C");
 		let l = Matrix2D.truncated_gaussian_distribution(0, 1, 10000, 2);
 		let trace = {
-			x: x.data,
+			x: x.toArray(),
 			type: 'histogram',
 		};
 		let data = [trace];
