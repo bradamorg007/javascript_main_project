@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>matrix2D</title>
+
+	<script src="libraries/p5.js"></script>
+	<script src="libraries/p5.dom.js"></script>
+	<script src="libraries/p5.sound.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="sketch.js"></script>
+	<script src="Random.js"></script>
+	<script src="Matrix2D.js"></script>
+
+
+
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+
+		canvas {
+			margin: auto;
+		}
+	</style>
+
+	<div id="myDiv"></div>
+
+	<script>
+		let x = new Matrix2D(500, 20);
+		x.xavier_normal();
+		x.flatten("C");
+		let l = Matrix2D.truncated_gaussian_distribution(0, 1, 10000, 2);
+		let trace = {
+			x: x.data,
+			type: 'histogram',
+		};
+		let data = [trace];
+		Plotly.newPlot('myDiv', data);
+	</script>
+
+</head>
+
+<body>
+</body>
+
+</html>
