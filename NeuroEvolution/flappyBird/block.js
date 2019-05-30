@@ -5,7 +5,7 @@ class block {
         this.width = 100;
         this.speed = 4;
         this.xPos = width;
-        let gapSize = 70;
+        let gapSize = 175;
 
         // Math.floor(Math.random() * (max - min + 1)) + min     ceil(max), floor(min)
 

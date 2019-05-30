@@ -1,4 +1,4 @@
-const TOTAL_POPULATION = 200;
+const TOTAL_POPULATION = 300;
 
 let activeAgents = [];;
 let deadAgents = [];
@@ -24,6 +24,10 @@ function draw() {
 			blocks.splice(i, 1);
 			i--;
 		}
+	}
+
+	if (frameCount % 100 === 0) {
+		blocks.push(new block());
 	}
 
 	// All agents will have the same xPos 
@@ -57,9 +61,6 @@ function draw() {
 
 	}
 
-	if (frameCount % 150 === 0) {
-		blocks.push(new block());
-	}
 
 	// Draw Everything
 
@@ -76,19 +77,21 @@ function draw() {
 	// If everything is dead resart the game with new population.
 
 	if (activeAgents.length === 0) {
-		resetGame();
+		activeAgents = GA.produceNextGeneration(deadAgents);
+		deadAgents = [];
+		//blocks = [];
 	}
 
 }
 
 
-function resetGame() {
-	deadAgents = [];
-	activeAgents = [];
-	for (let i = 0; i < TOTAL_POPULATION; i++) {
-		activeAgents.push(new Agent());
-	}
-}
+// function resetGame() {
+// 	deadAgents = [];
+// 	activeAgents = [];
+// 	for (let i = 0; i < TOTAL_POPULATION; i++) {
+// 		activeAgents.push(new Agent());
+// 	}
+// }
 
 
 // p5 if you define a function in the sketch it will get executed

@@ -1,6 +1,6 @@
 class Agent {
 
-    constructor() {
+    constructor(empty) {
 
         // If you change the gravity and lift then the velocity limits also need changing
         this.yPos = height / 2;
@@ -18,7 +18,12 @@ class Agent {
         let msActFunctions = ["RELU", "softmax"];
 
         this.brain = new NeuralNetwork(msLayerUnits, msActFunctions);
-        this.brain.initLayers("he_normal");
+
+        if (empty === undefined) {
+            this.brain.initLayers("he_normal");
+        } else {
+            this.brain.initLayers(); // init an empty array of elements
+        }
 
     }
 
