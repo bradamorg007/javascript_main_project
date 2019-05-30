@@ -467,9 +467,6 @@ class Matrix2D {
 
         let size = this.size();
 
-        if (size.rows == 1 && size.cols === 1) {
-            return gaussian_distribution(0, 1, 1);
-        }
         for (let i = 0; i < size.rows; i++) {
             this.data[i] = [];
             for (let j = 0; j < size.cols; j++) {
@@ -488,10 +485,6 @@ class Matrix2D {
         let cuttoff = 2;
         let size = this.size();
 
-        if (size.rows === 1 && size.cols === 1) {
-            let draw = Matrix2D.truncated_gaussian_distribution(mean, sigma, samples, cuttoff);
-            return draw * Math.sqrt(2 / (size.cols));
-        }
         for (let i = 0; i < size.rows; i++) {
             this.data[i] = [];
             for (let j = 0; j < size.cols; j++) {
@@ -519,9 +512,6 @@ class Matrix2D {
         let cuttoff = 2;
         let size = this.size();
 
-        if (size.rows === 1 && size.cols === 1) {
-            return this.truncated_normal(mean, sigma, samples, cuttoff) * Math.sqrt(1 / (size.cols));
-        }
         for (let i = 0; i < size.rows; i++) {
             this.data[i] = [];
             for (let j = 0; j < size.cols; j++) {
@@ -541,9 +531,6 @@ class Matrix2D {
         let cuttoff = 2;
         let size = this.size();
 
-        if (size.rows === 1 && size.cols === 1) {
-            return Matrix2D.truncated_gaussian_distribution(mean, sigma, samples, cuttoff);
-        }
         for (let i = 0; i < size.rows; i++) {
             this.data[i] = [];
             for (let j = 0; j < size.cols; j++) {

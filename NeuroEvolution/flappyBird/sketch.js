@@ -1,52 +1,96 @@
-let agent;
+const TOTAL_POPULATION = 500;
+
+
+let activeAgents = [];;
+let deadAgents = [];
 let blocks = [];
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	agent = new Agent();
+
+	for (let i = 0; i < TOTAL_POPULATION; i++) {
+		activeAgents.push(new Agent());
+	}
 	blocks.push(new block());
 }
 
 
 function draw() {
-	background(255);
-
-
-	if (frameCount % 100 === 0) {
-		blocks.push(new block());
-	}
 
 	for (let i = 0; i < blocks.length; i++) {
 
-		if (blocks[i].hit(agent)) {
-			//console.log("HIT!!!");
-			//resetGame();
-			//break;
-
-		}
-
 		blocks[i].update();
-		blocks[i].show();
 
 		if (blocks[i].offscreen()) {
 			blocks.splice(i, 1);
 			i--;
 		}
+	}
 
+	// All agents will have the same xPos 
+	let globalXPos = activeAgents[0].xPos;
+
+	// Find the closestBloct. because the agets all have the same xPos then 
+	// it means the closest block for one will be the closest block for all
+
+	let clostestBlock = null;
+
+	for (let i = 0; i < blocks.length; i++) {
+		if (globalXPos < (blocks[i].xPos + blocks[i].width)) {
+			clostestBlock = blocks[i];
+			break;
+		}
+	}
+
+	// Go through each agent check if they have hit something and if they have 
+	// add them to the deadAgents list. 
+
+	for (let i = 0; i < activeAgents.length; i++) {
+
+		activeAgents[i].think(clostestBlock);
+		activeAgents[i].update();
+
+		if (clostestBlock.hit(activeAgents[i])) {
+			deadAgents.push(activeAgents[i]);
+			activeAgents.splice(i, 1);
+			i--;
+		}
 
 	}
 
-	agent.think(blocks);
-	agent.update();
-	agent.show();
+	if (frameCount % 100 === 0) {
+		blocks.push(new block());
+	}
+
+	// Draw Everything
+
+	background(255);
+
+	for (let i = 0; i < blocks.length; i++) {
+		blocks[i].show();
+	}
+
+	for (let i = 0; i < activeAgents.length; i++) {
+		activeAgents[i].show();
+	}
+
+	// If everything is dead resart the game with new population.
+
+	if (activeAgents.length === 0) {
+		resetGame();
+	}
+
+
 
 }
 
 
 function resetGame() {
-	// For Now this just resets the agent. But for the genetic algo we need it to kill the agent.
-	// agent.yPos = height / 2;
-	// blocks = [];
+	deadAgents = [];
+	activeAgents = [];
+	for (let i = 0; i < TOTAL_POPULATION; i++) {
+		activeAgents.push(new Agent());
+	}
 }
 
 

@@ -32,6 +32,8 @@ class block {
 
         if (agent.yPos - (agent.radius * 0.5) < this.topStart || agent.yPos + (agent.radius * 0.5) > this.bottomStart) {
             if (agent.xPos > this.xPos && agent.xPos < this.xPos + this.width) {
+                // For Now this just resets the agent. But for the genetic algo we need it to kill the agent.
+                agent.yPos = height / 2;
                 return true;
             }
         }

@@ -24,26 +24,16 @@ class Agent {
     }
 
     show() {
-        fill(0);
+        fill(0, 100);
+        stroke(0.5);
         ellipse(this.xPos, this.yPos, this.radius, this.radius);
     }
 
-    think(blocks) {
-
-        // Check which is the closest block. if the agent is half way through a block then 
-        // the agent will consider the block its currently under as the first block.
-        let clostestBlock = null;
-
-        for (let i = 0; i < blocks.length; i++) {
-            if (this.xPos < (blocks[i].xPos + blocks[i].width)) {
-                clostestBlock = blocks[i];
-                break;
-            }
-        }
+    think(clostestBlock) {
 
         // If the screen is too small not enough blocks will spawn meaning
         // that clostestBlock will stay null. So just increase screen size this error will go away
-        // this should be a consideration when using pixel input
+        // this should be a consideration when using pixel input.
 
         let inputs = [];
         inputs[0] = clostestBlock.xPos / width;

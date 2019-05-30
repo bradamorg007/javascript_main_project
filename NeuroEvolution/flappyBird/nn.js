@@ -279,7 +279,8 @@ class NeuralNetwork {
 
     mutate(rate) {
 
-        // Need to go through each layer section - each weight & biases matrix
+        // Need to go through each layer section - each weight & biases matrix and tweak the
+        // the values up or down by a small amount.
 
         for (let i = 0; i < this.layers.length; i++) {
 
@@ -288,8 +289,8 @@ class NeuralNetwork {
                 for (let k = 0; k < this.layers[i].weights.size().cols; k++) {
 
                     if (Math.random() < rate) {
-                        this.layers[i].weights.data[j][k] = Math.random() * 100;
-                        //this.layers[i].weights.data[j][k] += Matrix2D.gaussian_distribution(0, 1, 1);
+                        //this.layers[i].weights.data[j][k] = Math.random() * 100;
+                        this.layers[i].weights.data[j][k] += Matrix2D.gaussian_distribution(0, 1, 1);
                     }
 
                 }
@@ -300,8 +301,8 @@ class NeuralNetwork {
                 for (let p = 0; p < this.layers[i].biases.size().cols; p++) {
 
                     if (Math.random() < rate) {
-                        this.layers[i].biases.data[l][p] = Math.random() * 100;
-                        //this.layers[i].biases.data[l][p] += Matrix2D.gaussian_distribution(0, 1, 1);
+                        //this.layers[i].biases.data[l][p] = Math.random() * 100;
+                        this.layers[i].biases.data[l][p] += Matrix2D.gaussian_distribution(0, 1, 1);
                     }
                 }
             }
