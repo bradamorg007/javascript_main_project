@@ -3,7 +3,7 @@ class block {
     constructor() {
 
         this.width = 100;
-        this.speed = 5;
+        this.speed = 4;
         this.xPos = width;
         let gapSize = 70;
 

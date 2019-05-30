@@ -1,5 +1,4 @@
-const TOTAL_POPULATION = 500;
-
+const TOTAL_POPULATION = 200;
 
 let activeAgents = [];;
 let deadAgents = [];
@@ -58,7 +57,7 @@ function draw() {
 
 	}
 
-	if (frameCount % 100 === 0) {
+	if (frameCount % 150 === 0) {
 		blocks.push(new block());
 	}
 
@@ -79,8 +78,6 @@ function draw() {
 	if (activeAgents.length === 0) {
 		resetGame();
 	}
-
-
 
 }
 

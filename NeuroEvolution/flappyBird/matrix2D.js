@@ -462,6 +462,17 @@ class Matrix2D {
         }
     }
 
+    uniformRandom() {
+        // initialise matric with set of values between -1 and +1 using
+        // a uniform random distribution
+        let size = this.size();
+        for (let i = 0; i < size.rows; i++) {
+            this.data[i] = [];
+            for (let j = 0; j < size.cols; j++) {
+                this.data[i][j] = Math.random() * 2 - 1;
+            }
+        }
+    }
 
     normal() {
 

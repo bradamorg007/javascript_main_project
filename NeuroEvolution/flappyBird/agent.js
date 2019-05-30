@@ -14,7 +14,6 @@ class Agent {
 
         this.score = 0;
 
-
         let msLayerUnits = [6, 4, 2];
         let msActFunctions = ["RELU", "softmax"];
 

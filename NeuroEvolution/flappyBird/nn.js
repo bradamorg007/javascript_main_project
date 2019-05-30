@@ -93,47 +93,17 @@ class NeuralNetwork {
 
     constructor(layerUnits, activationFuncList) {
 
-        this.initTypes = ["normal", "he_normal", "xavier", "truncated_normal"];
-        this.activationFunctions = ["sigmoid", "RELU", "tanh", "softmax"];
+
         // +2 because all networks have 
 
-        if (NeuralNetwork.layerChecks(layerUnits)) {
-            this.numLayers = layerUnits.length;
+        this.numLayers = layerUnits.length;
+        // Layers will store the LayerToLayer Objects
+        this.layers = [];
+        // The number of units per layer
+        this.layerUnits = layerUnits;
+        this.weightInit = false;
+        this.activationFunctions = activationFuncList;
 
-            if (NeuralNetwork.actFuncCheck(activationFuncList, layerUnits.length)) {
-                // Layers will store the LayerToLayer Objects
-                this.layers = [];
-                // The number of units per layer
-                this.layerUnits = layerUnits;
-                this.weightInit = false;
-
-                let match = false;
-                for (let i = 0; i < activationFuncList.length; i++) {
-                    for (let j = 0; j < this.activationFunctions.length; j++) {
-
-                        if (activationFuncList[i] === this.activationFunctions[j]) {
-                            match = true;
-                            break;
-                        }
-                    }
-
-                    if (match) {
-                        if (activationFuncList.length === 1) {
-                            break;
-                        }
-                    } else {
-                        throw new Error("Illegal Argument Exception: Actication Function list contains an invalid entry");
-                    }
-                }
-
-                this.activationFunctions = activationFuncList;
-            } else {
-                throw new Error("Illegal Argument Exception: Activation layer must be 1 or equal to the number of layers - 1 ");
-            }
-
-        } else {
-            throw new Error("Illegal Argument Exception: Units: Units Must be of type array, not empty or one layer.");
-        }
     }
 
     setLayerUnits(layerUnits) {
@@ -178,17 +148,6 @@ class NeuralNetwork {
             throw new Error("Illegal Argument Exception: The topology of the network has not been defined");
         }
 
-        let match = false
-        for (let i = 0; i < this.initTypes.length; i++) {
-            if (initType === this.initTypes[i]) {
-                match = true;
-                break;
-            }
-        }
-
-        if (match === false) {
-            throw new Error("Illegal Argument Exception: initType has has not been correctly defined");
-        }
 
         for (let i = 1; i < this.layerUnits.length; i++) {
 
@@ -233,6 +192,11 @@ class NeuralNetwork {
                 case "truncated_normal":
                     LayerToLayer.weights.truncated_normal();
                     LayerToLayer.biases.truncated_normal();
+                    break;
+
+                case "uniformRandom":
+                    LayerToLayer.weights.uniformRandom();
+                    LayerToLayer.biases.uniformRandom();
                     break;
 
             }
