@@ -5,12 +5,13 @@ class block {
         this.width = 100;
         this.speed = 4;
         this.xPos = width;
-        let gapSize = 175;
+        let gapSize = 80;
 
         // Math.floor(Math.random() * (max - min + 1)) + min     ceil(max), floor(min)
 
-        let topStart = Math.random() * (height - 50);
-        let bottomStart = Math.floor(Math.random() * (height - ((topStart + gapSize) + 1))) + (topStart + gapSize);
+        let topStart = Math.random() * (height - gapSize);
+        let min = topStart + gapSize;
+        let bottomStart = Math.floor(Math.random() * (height - min + 1)) + min;
 
         this.topStart = topStart;
         this.bottomStart = bottomStart;

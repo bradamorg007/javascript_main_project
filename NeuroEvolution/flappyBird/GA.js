@@ -31,79 +31,45 @@ class GA {
         }
 
 
-        // 2.) Proportional fitness probabilities Normalise the agent scores now that we have the sum. 
-        for (let i = 0; i < population.length; i++) {
-            population[i].score = population[i].score / fitnessSum;
-        }
+        // // 2.) Proportional fitness probabilities Normalise the agent scores now that we have the sum. 
+        // for (let i = 0; i < population.length; i++) {
+        //     population[i].fitness = population[i].score / fitnessSum;
+        // }
 
         // 3.) now I need to create a new population of children
 
         // i - throw two darts to choose Parent A and B
         for (let i = 0; i < population.length; i++) {
 
-            let parentA = null;
-            let parentB = null;
-
-            let r1 = Math.random();
-            let r2 = Math.random();
-
-            let index1 = 0;
-            let index2 = 0;
-
-            let done1 = false;
-            let done2 = false;
-            let doneOverall = false;
-            while (doneOverall === false) {
-
-                r1 -= population[index1].score;
-                r2 -= population[index2].score;
-
-                if (r1 < 0) {
-                    done1 = true;
-
-                    if (parentA === null) {
-                        parentA = population[index1];
-
-                    } else {
-                        parentB = population[index1];
-                    }
-                }
-
-                if (r2 < 0) {
-                    done2 = true;
-
-                    if (parentA === null) {
-                        parentA = population[index2];
-
-                    } else {
-                        parentB = population[index2];
-
-                    }
-                }
-
-                if (done1 === true && done2 === true) {
-                    doneOverall = true;
-
-                } else {
-
-                    if (done1 === false) {
-                        index1++;
-                    }
-
-                    if (done2 === false) {
-                        index2++;
-                    }
-
-                }
-            }
-
-
+            let parentA = GA.selectParent(population, fitnessSum);
+            let parentB = GA.selectParent(population, fitnessSum);
             newPopulation.push(GA.reproduceAndMutate(parentA, parentB));
-
         }
 
         return newPopulation;
 
+    }
+
+    static selectParent(population, fitnessSum) {
+
+        let index = 0;
+        let r = Math.round(Math.random() * fitnessSum);
+
+        while (r > 0) {
+            r -= population[index].score;
+
+            if (r > 0) {
+                index++;
+            }
+        }
+
+        let parent = population[index];
+
+        if (parent === undefined) {
+            console.log("Hhehe");
+        }
+
+        return parent;
     }
 
     static reproduceAndMutate(parentA, parentB) {

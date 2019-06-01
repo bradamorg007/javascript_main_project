@@ -447,6 +447,32 @@ class Matrix2D {
         };
     }
 
+    minMax() {
+
+        let min = this.data[0][0];
+        let max = this.data[0][0];
+
+
+        for (let i = 0; i < this.size().rows; i++) {
+            for (let j = 0; j < this.size().cols; j++) {
+
+                if (this.data[i][j] > max) {
+                    max = this.data[i][j];
+
+                } else if (this.data[i][j] < min) {
+                    min = this.data[i][j];
+                }
+
+            }
+        }
+
+        return {
+            min: min,
+            max: max
+        }
+
+
+    }
 
 
     // INIT MATRIX ELEMENTS FUNCTIONS =================================================

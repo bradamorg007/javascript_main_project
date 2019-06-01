@@ -10,9 +10,15 @@ class Agent {
         this.maxLim = 6;
         this.minLim = -15;
         this.velocity = 0;
-        this.radius = 32;
+        this.radius = 25;
+
+        this.timeSamplesExperianced = 0;
+        this.totalDistanceFromGapOverTime = 0;
 
         this.score = 0;
+        this.fitness = 0;
+        this.avgDistFromGap = 0;
+
 
         let msLayerUnits = [6, 4, 2];
         let msActFunctions = ["RELU", "softmax"];
@@ -64,7 +70,7 @@ class Agent {
         this.velocity += this.lift;
     }
 
-    update() {
+    update(clostestBlock) {
         //  The velcoity cumlatively increases with respect to the amount of gravity
         // Update the yPosition with the velocity. y = the top is 0 and the bottom of the screen is the height 
         // of the window. 
@@ -90,6 +96,14 @@ class Agent {
             this.velocity = 0;
 
         }
+
+        // penelise agents for their distance on the y from the center of the gap of the obsticles
+        let gap = clostestBlock.bottomStart - clostestBlock.topStart;
+        let gapMid = clostestBlock.topStart + Math.round((gap / 2));
+        let agentDistanceFromGap = Math.floor(Math.abs(this.yPos - gapMid));
+
+        this.totalDistanceFromGapOverTime += agentDistanceFromGap;
+        this.timeSamplesExperianced++;
 
         this.score++;
     }

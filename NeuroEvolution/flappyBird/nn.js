@@ -17,6 +17,14 @@ function softmax(x) {
         throw new Error("Activation Function Error: Softmax must recieve a Matrix2D as input ")
     }
 
+    let minMax_val = x.minMax();
+
+    for (let i = 0; i < x.size().rows; i++) {
+        for (let j = 0; j < x.size().cols; j++) {
+            x.data[i][j] = x.data[i][j] - minMax_val.max;
+        }
+    }
+
     let exps = Matrix2D.map(x, exponential);
 
     let sumExps = 0;
