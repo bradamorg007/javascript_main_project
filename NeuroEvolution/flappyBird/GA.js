@@ -80,7 +80,7 @@ class GA {
 
         // Loops can use child dimensions as all networks have fixed same topologies in this
 
-        let child = new Agent(true); // init an empty child
+        let child = new Agent(false, true); // init an empty child
 
         for (let i = 0; i < child.brain.layers.length; i++) {
 

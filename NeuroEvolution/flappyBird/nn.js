@@ -101,17 +101,69 @@ class NeuralNetwork {
 
     constructor(layerUnits, activationFuncList) {
 
+        if (layerUnits === undefined || activationFuncList === undefined) {
 
-        // +2 because all networks have 
+            this.numLayers = null;
+            // Layers will store the LayerToLayer Objects
+            this.layers = null;
+            // The number of units per layer
+            this.layerUnits = null;
+            this.weightInit = null;
+            this.activationFunctions = null;
 
-        this.numLayers = layerUnits.length;
+
+        } else {
+
+            this.numLayers = layerUnits.length;
+            // Layers will store the LayerToLayer Objects
+            this.layers = [];
+            // The number of units per layer
+            this.layerUnits = layerUnits;
+            this.weightInit = false;
+            this.activationFunctions = activationFuncList;
+
+        }
+
+        this.CLASS_TAG = "nn.js";
+
+    }
+
+    serialize() {
+        return JSON.stringify(this);
+    }
+
+    static deserialize(data) {
+
+        if (typeof data == 'string') {
+            data = JSON.parse(data);
+        }
+
+        let nn = new NeuralNetwork();
+
         // Layers will store the LayerToLayer Objects
-        this.layers = [];
-        // The number of units per layer
-        this.layerUnits = layerUnits;
-        this.weightInit = false;
-        this.activationFunctions = activationFuncList;
 
+        let layers = [];
+        for (let i = 0; i < data.layers.length; i++) {
+
+            let LayerToLayer = {
+                tag: data.layers[i].tag,
+                weights: Matrix2D.deserialize(data.layers[i].weights),
+                biases: Matrix2D.deserialize(data.layers[i].biases),
+                activationFunction: data.layers[i].activationFunction
+            }
+
+            layers.push(LayerToLayer);
+
+        }
+
+        // The number of units per layer
+        nn.layers = layers;
+        nn.numLayers = data.layerUnits.length;
+        nn.layerUnits = data.layerUnits;
+        nn.weightInit = data.weightInit;
+        nn.activationFunctions = data.activationFunctions;
+
+        return nn;
     }
 
     setLayerUnits(layerUnits) {

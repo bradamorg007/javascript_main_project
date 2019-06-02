@@ -1,8 +1,8 @@
 class Agent {
 
-    constructor(empty) {
+    constructor(initBrain, initEmpty) {
 
-        // If you change the gravity and lift then the velocity limits also need changing
+        // If you change the gravity and lift then the velocity limits also need changing. This is max & minLim
         this.yPos = height / 2;
         this.xPos = 50;
         this.gravity = 0.6;
@@ -19,16 +19,24 @@ class Agent {
         this.fitness = 0;
         this.avgDistFromGap = 0;
 
+        if (initBrain.CLASS_TAG !== undefined || initBrain === true) {
+            if (initBrain.CLASS_TAG === "nn.js") {
 
-        let msLayerUnits = [6, 4, 2];
-        let msActFunctions = ["RELU", "softmax"];
+                this.brain = NeuralNetwork.deserialize(initBrain);
+            }
 
-        this.brain = new NeuralNetwork(msLayerUnits, msActFunctions);
-
-        if (empty === undefined) {
-            this.brain.initLayers("he_normal");
         } else {
-            this.brain.initLayers(); // init an empty array of elements
+
+            let msLayerUnits = [6, 4, 2];
+            let msActFunctions = ["RELU", "softmax"];
+
+            this.brain = new NeuralNetwork(msLayerUnits, msActFunctions);
+
+            if (initEmpty === false) {
+                this.brain.initLayers("he_normal");
+            } else {
+                this.brain.initLayers(); // init an empty array of elements
+            }
         }
 
     }
@@ -110,6 +118,18 @@ class Agent {
 
     minMaxNormalise(x) {
         return (x - this.minLim) / (this.maxLim - this.minLim);
+    }
+
+    computeFitness() {
+
+        // penalise agent based on avg distance from gap
+
+        let impactFactor = 0.5; // adjusts the percentage of penalisation applied
+        this.avgDistFromGap = Math.floor(this.totalDistanceFromGapOverTime / this.timeSamplesExperianced);
+        this.score -= Math.floor(impactFactor * this.avgDistFromGap);
+        if (this.score < 0) {
+            this.score = 0;
+        }
     }
 
 

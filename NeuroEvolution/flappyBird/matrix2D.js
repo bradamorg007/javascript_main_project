@@ -85,6 +85,17 @@ class Matrix2D {
 
     }
 
+    static deserialize(data) {
+
+        if (typeof data == 'string') {
+            data = JSON.parse(data);
+        }
+
+        let matrix = new Matrix2D(data.rows, data.cols);
+        matrix.data = data.data;
+
+        return matrix;
+    }
 
     print(...data) {
         console.table(this.data);

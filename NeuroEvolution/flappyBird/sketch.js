@@ -1,4 +1,7 @@
 const TOTAL_POPULATION = 200;
+const GA_ACTIVE = false;
+const LOAD_MODEL = true;
+let MODEL_LOAD_PATH = "resources/AgentBrain.json";
 
 let activeAgents = [];;
 let deadAgents = [];
@@ -8,17 +11,46 @@ let generationCount = 0;
 
 let slider;
 let drawButton;
+let saveButton;
+
+let loadedBrain;
+
+function preload() {
+
+	if (LOAD_MODEL) {
+		loadedBrain = loadJSON(MODEL_LOAD_PATH);
+	}
+
+}
 
 function setup() {
 	createCanvas(windowWidth * 0.7, windowHeight * 0.5);
+
+	// Make the Interface Stuff
 	slider = createSlider(1, 200, 1);
 	drawButton = createCheckbox("draw sim", true);
+	saveButton = createButton("Save Best Agent");
+	saveButton.mousePressed(saveButtonPressed);
 
-	for (let i = 0; i < TOTAL_POPULATION; i++) {
-		activeAgents.push(new Agent());
-	}
+	loadAgents();
+
+
 }
 
+function loadAgents() {
+	if (LOAD_MODEL) {
+
+		//let brain = NeuralNetwork.deserialize(loadedModelJSON);
+		//let brain = NeuralNetwork.deserialize(loadedBrain);
+		let agent = new Agent(loadedBrain, true);
+		activeAgents.push(agent);
+
+	} else {
+		for (let i = 0; i < TOTAL_POPULATION; i++) {
+			activeAgents.push(new Agent(false, false));
+		}
+	}
+}
 
 function draw() {
 
@@ -71,11 +103,7 @@ function draw() {
 				// over the course of its entire life. this is to help distinguish between the performance
 				// of agents that all crash into the same block, the ones that were closer to the gap, were
 				// on a better track than the ones miles away from it.
-				agent.avgDistFromGap = Math.floor(agent.totalDistanceFromGapOverTime / agent.timeSamplesExperianced);
-				agent.score -= Math.floor(0.5 * agent.avgDistFromGap);
-				if (agent.score < 0) {
-					agent.score = 0;
-				}
+				agent.computeFitness();
 				deadAgents.push(agent);
 				activeAgents.splice(i, 1);
 				i--;
@@ -86,11 +114,14 @@ function draw() {
 		// If everything is dead resart the game with new population.
 
 		if (activeAgents.length === 0) {
-			activeAgents = GA.produceNextGeneration(deadAgents);
-			deadAgents = [];
-			blocks = [];
-			blockCounter = 0;
-			generationCount++;
+			if (GA_ACTIVE) {
+				activeAgents = GA.produceNextGeneration(deadAgents);
+				generationCount++;
+			} else {
+				loadAgents();
+			}
+			resetGame();
+
 			console.log(generationCount)
 		}
 
@@ -114,6 +145,40 @@ function draw() {
 
 
 
+}
+
+function resetGame() {
+	deadAgents = [];
+	blocks = [];
+	blockCounter = 0;
+}
+
+
+
+function saveButtonPressed() {
+
+	if (activeAgents.length > 0) {
+
+		let a = activeAgents[0];
+		a.computeFitness();
+		let max = a.score;
+
+		let index = 0;
+
+		for (let i = 0; i < activeAgents.length; i++) {
+
+			let currentAgent = activeAgents[i];
+			currentAgent.computeFitness();
+
+			if (currentAgent > max) {
+				max = currentAgent.score;
+				index = i;
+			}
+
+		}
+
+		saveJSON(activeAgents[index].brain, 'AgentBrain.json');
+	}
 }
 
 
