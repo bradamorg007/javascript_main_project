@@ -42,6 +42,14 @@ Implement novely search into this for practise.
 
 Implement autoencoder aspect of the project
 
+# GPU Acceleration
+
+Areas to apply GPU to:
+  Functios need to avoid if statements and be independent. Indepenednt means that each elment can be computed on its own and     isnt depenendent on the results of other elements
+  Matrix Operations
+  Calculating the fitness function for each agent
+  Calculating avg  distance from gap for each agent
+
 # Notes General Ideas 
 
 In my model when an agent needs to simulate an internal thought process. That testing can occur of screen in a seperate 
