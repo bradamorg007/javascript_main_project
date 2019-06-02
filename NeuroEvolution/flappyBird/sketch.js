@@ -1,6 +1,6 @@
-const TOTAL_POPULATION = 200;
-const GA_ACTIVE = false;
-const LOAD_MODEL = true;
+const TOTAL_POPULATION = 400;
+const GA_ACTIVE = true;
+const LOAD_MODEL = false;
 let MODEL_LOAD_PATH = "resources/AgentBrain.json";
 
 let activeAgents = [];;
@@ -161,7 +161,7 @@ function saveButtonPressed() {
 
 		let a = activeAgents[0];
 		a.computeFitness();
-		let max = a.score;
+		let max = a.fitness;
 
 		let index = 0;
 
@@ -171,7 +171,7 @@ function saveButtonPressed() {
 			currentAgent.computeFitness();
 
 			if (currentAgent > max) {
-				max = currentAgent.score;
+				max = currentAgent.fitness;
 				index = i;
 			}
 

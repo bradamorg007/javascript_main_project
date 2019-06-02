@@ -26,14 +26,15 @@ class GA {
         let fitnessSum = 0;
 
         for (let i = 0; i < population.length; i++) {
-            population[i].score = Math.pow(population[i].score, 2);
-            fitnessSum += population[i].score;
+            population[i].fitness = Math.pow(population[i].fitness, 2);
+            population[i].computeFitness();
+            fitnessSum += population[i].fitness;
         }
 
 
-        // // 2.) Proportional fitness probabilities Normalise the agent scores now that we have the sum. 
+        // // 2.) Proportional fitness probabilities Normalise the agent fitnesss now that we have the sum. 
         // for (let i = 0; i < population.length; i++) {
-        //     population[i].fitness = population[i].score / fitnessSum;
+        //     population[i].fitness = population[i].fitness / fitnessSum;
         // }
 
         // 3.) now I need to create a new population of children
@@ -56,7 +57,7 @@ class GA {
         let r = Math.round(Math.random() * fitnessSum);
 
         while (r > 0) {
-            r -= population[index].score;
+            r -= population[index].fitness;
 
             if (r > 0) {
                 index++;

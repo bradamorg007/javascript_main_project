@@ -15,7 +15,6 @@ class Agent {
         this.timeSamplesExperianced = 0;
         this.totalDistanceFromGapOverTime = 0;
 
-        this.score = 0;
         this.fitness = 0;
         this.avgDistFromGap = 0;
 
@@ -113,7 +112,7 @@ class Agent {
         this.totalDistanceFromGapOverTime += agentDistanceFromGap;
         this.timeSamplesExperianced++;
 
-        this.score++;
+        this.fitness++;
     }
 
     minMaxNormalise(x) {
@@ -126,9 +125,9 @@ class Agent {
 
         let impactFactor = 0.5; // adjusts the percentage of penalisation applied
         this.avgDistFromGap = Math.floor(this.totalDistanceFromGapOverTime / this.timeSamplesExperianced);
-        this.score -= Math.floor(impactFactor * this.avgDistFromGap);
-        if (this.score < 0) {
-            this.score = 0;
+        this.fitness -= Math.floor(impactFactor * this.avgDistFromGap);
+        if (this.fitness < 0) {
+            this.fitness = 0;
         }
     }
 
