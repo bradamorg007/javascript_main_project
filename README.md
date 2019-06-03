@@ -1,4 +1,4 @@
-# javascript_main_project
+# javascript_main_project: Foundation Branch - THIS SHOULD CHANGED ALL CHANGES SHOULD OCCUR IN TEST BRANCH
 My machine learning main project using javascript instead
 
 The Foundation code represents a working topologically static neuroevolution project.
