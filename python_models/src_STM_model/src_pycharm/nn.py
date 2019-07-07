@@ -134,14 +134,14 @@ class NeuralNetwork:
 
     def feed_foward(self, inputs):
 
-        if not isinstance(input, np.ndarray):
+        if not isinstance(inputs, np.ndarray):
             raise ValueError("Illegal Argument Exception: inputs into the network must be a numpy array")
 
-        if len(input.shape) <= 1:
+        if len(inputs.shape) <= 1:
             raise ValueError("Error: numpy 0 dimension detected, please use np.expand_dims on the zero axis to"+
                              "to make the np array shape a tuple e.g (1, 5) ")
 
-        inputs = np.reshape(inputs, newshape=(input.size, 1))
+        inputs = np.reshape(inputs, newshape=(inputs.size, 1))
 
         for layer in self.layers:
 

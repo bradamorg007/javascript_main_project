@@ -63,6 +63,10 @@ class Player(pygame.sprite.Sprite):
 
         # Did this update cause us to hit a wall?
         block_hit_list = pygame.sprite.spritecollide(self, walls, False)
+
+        if len(block_hit_list) != 0:
+            a = 1
+
         for block in block_hit_list:
             # If we are moving right, set our right side to the left side of
             # the item we hit
@@ -180,7 +184,7 @@ def main():
     # Create an 800x600 sized screen
     screen = pygame.display.set_mode([800, 600])
 
-    # Set the title of the window
+ # Set the title of the window
     pygame.display.set_caption('Maze Runner')
 
     # Create the player paddle object

@@ -10,7 +10,7 @@ class GA:
     crossOverRate = 0.5
 
     @staticmethod
-    def produceNextGeneration(population):
+    def produceNextGeneration(population, screen_width, screen_height):
 
         # // To produce the next generation several steps are required
         #
@@ -50,7 +50,7 @@ class GA:
 
             parentA = GA.selectParent(population, fitnessSum)
             parentB = GA.selectParent(population, fitnessSum)
-            newPopulation.append(GA.reproduceAndMutate(parentA, parentB))
+            newPopulation.append(GA.reproduceAndMutate(parentA, parentB, screen_width, screen_height))
 
         return newPopulation
 
@@ -74,14 +74,14 @@ class GA:
         return parent
 
     @staticmethod
-    def reproduceAndMutate(parentA, parentB):
+    def reproduceAndMutate(parentA, parentB, screen_width, screen_height):
         # // Now go through Parents parmaters and exchange gentic info
         # //  Also mutate select gene within the same loop
         # // no need having a seperte mutate function that loops through paramter matrices again
         #
         # // Loops can use child dimensions as all networks have fixed same topologies in this
 
-        child = Agent(initBrain=False, initEmpty=True)
+        child = Agent(initBrain=False, initEmpty=True, screen_width=screen_width, screen_height=screen_height )
 
 
         for i in range(len(child.brain.layers)):
@@ -127,7 +127,7 @@ class GA:
 
 if __name__ == "__main__":
 
-    parentA = Agent(initBrain=False, initEmpty=False)
-    parentB = Agent(initBrain=False, initEmpty=False)
-    child = GA.reproduceAndMutate(parentA, parentB)
+    parentA = Agent(initBrain=False, initEmpty=False, screen_width=800, screen_height=300)
+    parentB = Agent(initBrain=False, initEmpty=False, screen_width=800, screen_height=300)
+    child = GA.reproduceAndMutate(parentA, parentB, screen_width=800, screen_height=300)
 
