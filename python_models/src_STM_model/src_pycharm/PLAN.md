@@ -10,7 +10,8 @@
       
       ADDED: Rescale pygame function now the a copy of the screen can be downsampled to very samll resolution without effecting
       any of the game mechanics, so the simulation can run on 800x600 screen but the VAE will get a heavly downsampled version to spped up
-      processing time. everything scales with this function aswell which is AMAZING!!!!!
+      processing time. everything scales with this function aswell which is AMAZING!!!!!  
+      lowest setting are 40x40 any lower than this and some of the blockobjects width start warping. 
       
  2.)
  
