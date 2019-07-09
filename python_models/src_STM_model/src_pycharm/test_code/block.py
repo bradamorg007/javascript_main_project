@@ -17,21 +17,17 @@ class Component(pygame.sprite.Sprite):
 
 class Block():
 
-    def __init__(self, SCREEN_HEIGHT, SCREEN_WIDTH, width=100, speed=4):
+    def __init__(self, SCREEN_HEIGHT, SCREEN_WIDTH, class_label, width=100, speed=4):
 
         self.BLACK = (0, 0, 0)
         self.RED = (255, 0, 0)
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.SCREEN_WIDTH = SCREEN_WIDTH
 
-        if width == 'random':
-            width = 40
-        if speed == 'random':
-            speed = 2
-
         self.width = width
         self.speed = speed
         self.xPos = SCREEN_WIDTH
+        self.class_label = class_label
         self.configed_flag = False
 
 
@@ -51,7 +47,7 @@ class Block():
 
         self.topStart = topStart
         self.bottomStart = bottomStart
-
+        self.configed_flag = True
 
     def build(self):
 

@@ -10,11 +10,11 @@ class Agent(pygame.sprite.Sprite):
         super().__init__()
 
         self.gravity  = 0.6
-        self.lift     = -2
+        self.lift     = -15
         self.maxLim   = 6
         self.minLim   = -15
         self.velocity = 0
-        self.radius   = 2
+        self.radius   = 25
         self.color = (0, 0, 0, 50)
 
         self.name = name

@@ -3,93 +3,37 @@ import numpy as np
 from test_code.block import Block
 from test_code.level_manager import LevelManager
 from nn import NeuralNetwork
-from GA import GA
-from agent import Agent
+from test_code.agent_manager import AgentManager
+from test_code.neuroevolution import NeuroEvolution
+from test_code.image_capture import ImageCapture
+import json
 
 
-class AgentManager:
-    def __init__(self, population_size, level_manager):
-        not_sprites = []
-
-        for i in range(population_size):
-            not_sprites.append(Agent(initBrain=False, initEmpty=False,
-                                           screen_width=level_manager.SCREEN_WIDTH,
-                                           screen_height=level_manager.SCREEN_HEIGHT, name=str(i)))
-
-
-            self.len = len(not_sprites)
-            self.sprites = pygame.sprite.Group()
-            self.not_sprites = not_sprites
-            self.dead_agents = []
-
-
-    def splice(self, index):
-
-        dead_agent = self.not_sprites.pop(index)
-        self.dead_agents.append(dead_agent)
-        self.len = len(self.not_sprites)
-
-
-    def draw(self, surface):
-
-        self.sprites.add(self.not_sprites)
-        self.sprites.draw(surface)
-
-
-    def clear(self):
-        self.sprites = pygame.sprite.Group()
-
-
-    def update_arrays(self, input):
-
-        if isinstance(input, list):
-
-            self.not_sprites = input
-            self.sprites = pygame.sprite.Group()
-            self.len = len(self.not_sprites)
-            self.dead_agents = []
-
-        else:
-            raise ValueError("ERROR ActiveAgents: input must be of type list")
-
-
-def get_closest_block(active_blocks, global_xPos):
-    closest_block = None
-
-    for i in range(len(active_blocks)):
-        if global_xPos < active_blocks[i].bottom_block.rect.right:
-            closest_block = active_blocks[i]
-            active_blocks[i].top_block.image.fill((255, 0, 0))
-            break
-
-    return  closest_block
-
-
-
-def run(population_size, cycles, draw=True, LM=None):
+def run(population_size, cycles, level_manager, image_capture):
     # Call this function so the Pygame library can initialize itself
     pygame.init()
 
     # Create an 800x600 sized screen
-    screen = pygame.display.set_mode([LM.SCREEN_WIDTH, LM.SCREEN_HEIGHT])
+    screen = pygame.display.set_mode([level_manager.SCREEN_WIDTH, level_manager.SCREEN_HEIGHT])
 
     # Set the title of the window
     pygame.display.set_caption('Simulation Session')
 
     # Define Agents array sprite array dead agents array
     #active_agents sprites for drawing, active agents none sprites for computation
-    agents = AgentManager(population_size=POPULATION_SIZE, level_manager=LM)
+    agents = AgentManager(population_size=population_size, level_manager=level_manager)
+
+    neuro_evolution = NeuroEvolution()
 
     # Define Block array normal array with sprites in it
     active_blocks = []
 
+
     # Main simulation loop
-    trig = True
-    frame_count = 0
-    generation_count = 0
-    block_count = 0
     clock = pygame.time.Clock()
+    frame_count = 0
     END_SIM = False
+    time_start = pygame.time.get_ticks()
     while not END_SIM:
 
         # --- Event Processing ---
@@ -102,115 +46,118 @@ def run(population_size, cycles, draw=True, LM=None):
                 if event.key == pygame.K_q:
                     END_SIM = True
 
-            if LM.END_SIMULATION_FLAG:
-                END_SIM = True
-                print('simulation has ended')
 
         # cyles loop will capture all the game logic
+        label = ''
         for i in range(cycles):
 
             # --- Game Logic ---
             # house keeping on block objects
-            active_blocks, block_count = LM.monitor(active_blocks, frame_count=frame_count)
+            active_blocks = level_manager.monitor(active_blocks, frame_count)
 
             # update block positions
+            # create current labels present in active_blocks
             for i in range(len(active_blocks)):
                 active_blocks[i].update()
+                label += active_blocks[i].class_label + '-'
 
 
-            # determine closest block
-            global_xPos = agents.not_sprites[0].rect.x
+            level_manager, agents, active_blocks = neuro_evolution.run(level_manager, agents, active_blocks)
 
-            closest_block = get_closest_block(active_blocks, global_xPos)
+        if level_manager.TERMINATE_FLAG:
+            print('\n simulation is ending')
+            print()
+            if level_manager.TERMINATE_FLAG and not level_manager.END_SIMULATION_FLAG:
 
-            # if closest_block == None:
-            #     active_blocks.append(LM.buffer_pull_request())
-            #     closest_block = get_closest_block(active_blocks, global_xPos)
-
-            # agents think using nn then update their positions
-            # check if agents a block. if so remove from active_agents and add to dead agents
-            i = 0
-            while i < len(agents.not_sprites):
-
-                agent = agents.not_sprites[i]
-                agent.think(closest_block, LM.SCREEN_WIDTH, LM.SCREEN_HEIGHT)
-                agent.update(closest_block, LM.SCREEN_HEIGHT)
-
-                if closest_block.hit(agent):
-
-                    agent.computeFitness()
-                    agents.splice(i)
-                    i -= 1
-
-                i += 1
-
-            # check if all active agents are dead, the perform GA and reset game level and epochs
-            if len(agents.not_sprites) == 0:
-                new_population = GA.produceNextGeneration(population=agents.dead_agents,
-                                                          screen_width=LM.SCREEN_WIDTH,
-                                                          screen_height=LM.SCREEN_HEIGHT)
+                print('Termination Cause: The frequency of block object occurrences \n '
+                      'is too small to occupy the screen at all times given the simulation time length. \n '
+                      'This will cause xPos not found error during training. Recommend decreasing simulation \n'
+                      ' time length or increase number of block objects ')
 
 
+            elif level_manager.TERMINATE_FLAG and  level_manager.END_SIMULATION_FLAG:
+                print('Termination Cause: Normal end of epoch termination')
 
-                agents.update_arrays(new_population)
-                generation_count += 1
-                active_blocks = LM.level_reset(active_blocks)
-                trig = False
-                print('generation = %s population size = %s epoch = %s / %s' % (generation_count, len(new_population), LM.epoch_count, LM.epochs))
-                if generation_count == 15:
-                    draw = True
-
-                # reset level
-
-                # reset test
-
-            # if frame_count > 500 and trig == True:
-            #
-            #     LM.level_reset()
-            #     trig = False
-
-
-
+            print()
+            END_SIM = True
 
         # --- Drawing ---
+        screen.fill(level_manager.colors.WHITE)
 
-        if draw == True:
-            screen.fill(LM.colors.WHITE)
+        for block in active_blocks:
+            block.draw(screen)
 
-            for block in active_blocks:
-                block.draw(screen)
+        agents.draw(screen, mode=level_manager.mode)
 
-            agents.draw(screen)
+        image_capture.capture(surface=screen, label=label, level_manager=level_manager, frame_count=frame_count)
 
-            pygame.display.flip()
-            agents.clear()
+        pygame.display.flip()
+        agents.clear(mode=level_manager.mode)
 
-        clock.tick(LM.FPS)
-        if trig == True:
-            frame_count += 1
-        else:
+
+        if level_manager.RESET_FLAG:
+
             frame_count = 0
-            trig = True
+            level_manager.RESET_FLAG = False
+        else:
+            frame_count += 1
 
+
+        clock.tick(level_manager.FPS)
+
+    time_end = pygame.time.get_ticks()
+    print('Simulation Terminated')
+    print('Simulation Time Length = %s' % ((time_end-time_start)/ 1000))
     pygame.quit()
 
 
+if __name__ == "__main__":
 
-POPULATION_SIZE = 200
-CYLES = 1 # 1-200
-DRAW_SIM = True
+    POPULATION_SIZE = 200
+    CYLES = 1 # 1-200
+    DRAW_SIM = True
 
-SCREEN_HEIGHT = 60
-SCREEN_WIDTH = 60
+    SCREEN_HEIGHT = 600
+    SCREEN_WIDTH = 800
 
-blueprints = [[5, 20, None, 10, 1, 51],
-              [40, 55, None, 10, 1, 49],
-              ]
+    blueprints = [[50, 190, None, 100, 4, 100, 'unseen'],
+                  [450, 590, None, 100, 4, 0, 'seen'],
+                  ]
 
-LEVEL_MANAGER = LevelManager(FPS=30,game_len=30, epochs=5, number_of_blocks=20,
-                             buffer_size=10, overide_gap_size=20, blueprints=blueprints,
-                             block_speed=1, block_width=10,
-                             screen_dimensions=(SCREEN_WIDTH, SCREEN_HEIGHT),
-                             batch_reset='seed', optional_script_build_args='percentage_ordered')
+    LEVEL_MANAGER = LevelManager(FPS=60,
+                                 game_len=300,
+                                 epochs=2,
+                                 number_of_blocks=100,
+                                 buffer_size=10,
+                                 blueprints=blueprints,
 
-run(POPULATION_SIZE, CYLES, DRAW_SIM, LEVEL_MANAGER)
+                                 override_gap_size=100,
+                                 override_block_width=100,
+                                 override_block_speed=4,
+
+                                 y_top_jitter_probability=0.5,
+                                 y_top_jitter_amount=40,
+                                 y_bottom_jitter_probability=0.5,
+                                 y_bottom_jitter_amount=40,
+                                 width_jitter_probability=0.5,
+                                 width_jitter_amount=40,
+
+                                 batch_reset='seed',
+                                 screen_dimensions=(SCREEN_WIDTH, SCREEN_HEIGHT),
+                                 optional_script_build_args='percentage_ordered',
+                                 mode='capture', capture_mode_override=False
+                                 )
+
+    # init image capture
+    max_frames = LEVEL_MANAGER.compute_max_frames(capture_first_epoch_only=True)
+    filename = '../src_pycharm/data_unseen/'
+
+    IMAGE_CAPTURE = ImageCapture(buffer_size=0.05, max_frames=max_frames, step_size=1,
+                                 capture_first_epoch_only=True, capture_mode='save',
+                                 save_folder_path=filename, grey_scale=True,
+                                 rescale_shape=(40, 40), normalise=True, preview_images=False, show_progress=True)
+
+    LEVEL_MANAGER.save_config(save_folder_path=filename)
+    IMAGE_CAPTURE.save_config(save_folder_path=filename)
+
+    run(POPULATION_SIZE, CYLES, LEVEL_MANAGER, IMAGE_CAPTURE)
