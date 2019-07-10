@@ -2,7 +2,7 @@
 
 # To Do List 
 
-  1.) implement a capture class that will save the pixels arrays as some sort of zipped file. 
+  1.) #COMPLETED:# implement a capture class that will save the pixels arrays as some sort of zipped file. 
       storing all the arrays in one go may be too big for a pickle file to store. so it needs a batch size or try saving one at a time
       
       add data augmenetation features so that the blocks dont look completely the same so set some randomly to jitter the width and
