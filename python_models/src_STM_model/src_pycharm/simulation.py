@@ -120,8 +120,8 @@ if __name__ == "__main__":
     SCREEN_HEIGHT = 600
     SCREEN_WIDTH = 800
 
-    blueprints = [[50, 190, None, 100, 4, 100, 'unseen'],
-                  [450, 590, None, 100, 4, 0, 'seen'],
+    blueprints = [[50, 190, None, 100, 4, 0, 'unseen'],
+                  [400, 500, None, 100, 4, 100, 'seen'],
                   ]
 
     LEVEL_MANAGER = LevelManager(FPS=60,
@@ -135,27 +135,28 @@ if __name__ == "__main__":
                                  override_block_width=100,
                                  override_block_speed=4,
 
+                                 data_augmentation=True,
                                  y_top_jitter_probability=0.5,
-                                 y_top_jitter_amount=40,
+                                 y_top_jitter_amount=50,
                                  y_bottom_jitter_probability=0.5,
-                                 y_bottom_jitter_amount=40,
+                                 y_bottom_jitter_amount=50,
                                  width_jitter_probability=0.5,
                                  width_jitter_amount=40,
 
                                  batch_reset='seed',
                                  screen_dimensions=(SCREEN_WIDTH, SCREEN_HEIGHT),
                                  optional_script_build_args='percentage_ordered',
-                                 mode='capture', capture_mode_override=False
+                                 mode='train', capture_mode_override=False
                                  )
 
     # init image capture
     max_frames = LEVEL_MANAGER.compute_max_frames(capture_first_epoch_only=True)
-    filename = '../src_pycharm/data_unseen/'
+    filename = '../src_pycharm/data_seen_augment/'
 
     IMAGE_CAPTURE = ImageCapture(buffer_size=0.05, max_frames=max_frames, step_size=1,
                                  capture_first_epoch_only=True, capture_mode='save',
                                  save_folder_path=filename, grey_scale=True,
-                                 rescale_shape=(40, 40), normalise=True, preview_images=False, show_progress=True)
+                                 rescale_shape=(40, 40), normalise=False, preview_images=False, show_progress=True)
 
     LEVEL_MANAGER.save_config(save_folder_path=filename)
     IMAGE_CAPTURE.save_config(save_folder_path=filename)

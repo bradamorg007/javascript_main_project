@@ -22,6 +22,7 @@ class LevelManager:
                  screen_dimensions=(300, 300), batch_reset='seed',
                  optional_script_build_args="percentage", mode='train',
                  capture_mode_override=False,
+                 data_augmentation=False,
                  y_top_jitter_probability=None, y_bottom_jitter_probability=None, width_jitter_probability=None,
                  y_top_jitter_amount=1.0, y_bottom_jitter_amount=1.0, width_jitter_amount=1.0):
 
@@ -36,6 +37,7 @@ class LevelManager:
         self.epochs = epochs
         self.epoch_count = 0
 
+        self.data_augmentation = data_augmentation
         self.y_top_jitter = y_top_jitter_probability
         self.y_bottom_jitter = y_bottom_jitter_probability
         self.width_jitter = width_jitter_probability
@@ -89,7 +91,8 @@ class LevelManager:
 
         # build level script and load in first batch to buffer
         self.build_level_script(sum)
-        self.apply_basic_data_augmentation()
+        if self.data_augmentation:
+            self.apply_basic_data_augmentation()
         self.buffer_to_script_request()
 
     def compute_max_frames(self, capture_first_epoch_only):

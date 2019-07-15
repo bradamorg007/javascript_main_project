@@ -183,8 +183,8 @@ class NeuralNetwork:
             self.layers[i]['biases'] = update(layer['biases'])
 
 
-
-    def standardization(self, input):
+    @staticmethod
+    def standardization(input):
 
         if not isinstance(input, np.ndarray):
             raise ValueError("Illegal Argument Exception: inputs into the network must be a numpy array")
@@ -192,14 +192,15 @@ class NeuralNetwork:
         mean = np.mean(input)
         stdev = np.std(input)
 
-        func = lambda x: (x - mean) / stdev
-        func = np.vectorize(func)
-        input = func(input)
+        if stdev != 0:
+            func = lambda x: (x - mean) / stdev
+            func = np.vectorize(func)
+            input = func(input)
 
         return input
 
-
-    def normalise(self, input):
+    @staticmethod
+    def normalise(input):
 
         if not isinstance(input, np.ndarray):
             raise ValueError("Illegal Argument Exception: inputs into the network must be a numpy array")
@@ -207,9 +208,19 @@ class NeuralNetwork:
         max = np.max(input)
         min = np.min(input)
 
-        func = lambda x : (x - min) / (max - min)
-        func = np.vectorize(func)
-        input = func(input)
+        s = input.shape
+        rows = s[0]
+        cols = s[1]
+
+        for i in range(rows):
+            for j in range(cols):
+                x = input[i][j]
+                input[i][j] = (x - min) / (max - min)
+
+
+        # func = lambda x : (x - min) / (max - min)
+        # func = np.vectorize(func)
+        # input = func(input)
 
         return input
 
