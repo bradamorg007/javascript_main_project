@@ -4,10 +4,19 @@ function sigmoid(x) {
     return 1 / (1 + Math.exp(-x))
 }
 
+function dSigmoid(x) {
+    // requires x input to have already been through the sigmoid
+    return x * (1 - x);
+}
+
 function RELU(x) {
     // Leaky
     return (x < 0) ? 0.01 : x;
 
+}
+
+function dRELU(x) {
+    return (x < 0) ? 0.01 : 1;
 }
 
 function softmax(x) {
@@ -38,6 +47,12 @@ function softmax(x) {
     return Matrix2D.divide(exps, sumExps);
 }
 
+function dSoftmax(x) {
+    // requires x input to have already been through the softmax func. This calcs derivative for a single 
+    // logit or yi of the softmax vector
+    return x * (1 - x);
+}
+
 
 function exponential(x) {
     return Math.exp(x);
@@ -45,6 +60,11 @@ function exponential(x) {
 
 function tanh(x) {
     return Math.tanh(x);
+}
+
+function dTanh(x) {
+    // requires x input to have already been through the tanh
+    return 1 - Math.pow(x, 2);
 }
 
 function maxMin(x) {
@@ -93,8 +113,6 @@ function sd(x) {
 
 
 
-
-
 class NeuralNetwork {
 
     // Numlayers should include input layer, number of hidden layers and output layers
@@ -110,6 +128,7 @@ class NeuralNetwork {
             this.layerUnits = null;
             this.weightInit = null;
             this.activationFunctions = null;
+            this.backpropActive = false;
 
 
         } else {
@@ -229,7 +248,8 @@ class NeuralNetwork {
                 tag: strPrevious + "-" + strCurrent,
                 weights: new Matrix2D(currentLayer, previousLayer),
                 biases: new Matrix2D(currentLayer, 1),
-                activationFunction: (this.activationFunctions.length === 1) ? this.activationFunctions[0] : this.activationFunctions[i - 1]
+                activationFunction: (this.activationFunctions.length === 1) ? this.activationFunctions[0] : this.activationFunctions[i - 1],
+                outputSignal: null
             }
 
             switch (initType) {
@@ -278,6 +298,10 @@ class NeuralNetwork {
             inputs = Matrix2D.dotProduct(this.layers[i].weights, inputs);
             inputs = Matrix2D.add(inputs, this.layers[i].biases);
 
+            if (this.backpropActive) {
+                this.layers[i].outputSignal = inputs;
+            }
+
             switch (this.layers[i].activationFunction) {
 
                 case "sigmoid":
@@ -300,6 +324,56 @@ class NeuralNetwork {
 
         return inputs;
     }
+
+    // train(inputs, targets) {
+
+    //     // First 
+
+    // }
+
+    // Cost Functions 
+
+    meanSquaredError(outputs, targets) {
+
+        let results = new Matrix2D(output.size().rows, outputs.size().cols);
+
+        for (let i = 0; i < outputs.size().rows; i++) {
+            for (let j = 0; j < outputs.size().cols; j++) {
+                results.data[i][j] = Math.pow(targets.data[i][j] - outputs.data[i][j], 2);
+            }
+        }
+
+        return outputs;
+    }
+
+    // derivitaive of mean squared error cost function
+    dMeanSquaredError(outputs, targets) {
+
+        let results = new Matrix2D(output.size().rows, outputs.size().cols);
+
+        for (let i = 0; i < outputs.size().rows; i++) {
+            for (let j = 0; j < outputs.size().cols; j++) {
+                results.data[i][j] = -(targets.data[i][j] - outputs.data[i][j]);
+            }
+        }
+
+        return outputs;
+    }
+
+    // crossEntropyLoss(outputs, targets) {
+
+    //     if (outputs.size().rows !== targets.size().rows || outputs.size().cols !== targets.size().cols)
+    //         let sum = 0;
+
+    //     for (let i = 0; i < outputs.size().rows; i++) {
+    //         for (let j = 0; j < outputs.size().cols; j++) {
+
+    //             sum += targets.data[i][j] * Math.log(outputs.data[i][j])
+    //         }
+    //     }
+
+    //     return -(sum);
+    // }
 
     mutate(rate) {
 
