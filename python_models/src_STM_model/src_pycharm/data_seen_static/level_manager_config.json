@@ -46,7 +46,7 @@
     "width_jitter": 0.5,
     "width_jitter_amount": 40,
     "y_bottom_jitter": 0.5,
-    "y_bottom_jitter_amount": 40,
+    "y_bottom_jitter_amount": 50,
     "y_top_jitter": 0.5,
-    "y_top_jitter_amount": 40
+    "y_top_jitter_amount": 50
 }

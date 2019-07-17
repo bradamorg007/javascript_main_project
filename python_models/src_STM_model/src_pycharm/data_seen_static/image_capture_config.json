@@ -29,6 +29,7 @@
     "capture_mode": "save",
     "end_batch_number": 20,
     "feed_object": null,
+    "folder_bin": "AE_data",
     "grey_scale": true,
     "max_frames": 18000.0,
     "normalise": false,
@@ -37,7 +38,7 @@
         40,
         40
     ],
-    "save_folder_path": "../src_pycharm/data_seen_static/",
+    "save_folder_path": "data_seen_static",
     "show_progress": true,
     "step_size": 1
 }

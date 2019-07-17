@@ -1,12 +1,8 @@
 import pygame
-import numpy as np
-from test_code.block import Block
-from test_code.level_manager import LevelManager
-from nn import NeuralNetwork
-from test_code.agent_manager import AgentManager
-from test_code.neuroevolution import NeuroEvolution
-from test_code.image_capture import ImageCapture
-import json
+from level_manager import LevelManager
+from agent_manager import AgentManager
+from neuroevolution import NeuroEvolution
+from image_capture import ImageCapture
 
 
 def run(population_size, cycles, level_manager, image_capture):
@@ -120,8 +116,8 @@ if __name__ == "__main__":
     SCREEN_HEIGHT = 600
     SCREEN_WIDTH = 800
 
-    blueprints = [[50, 190, None, 100, 4, 0, 'unseen'],
-                  [400, 500, None, 100, 4, 100, 'seen'],
+    blueprints = [[50, 150, None, 100, 4, 49, 'unseen'],
+                  [400, 500, None, 100, 4, 51, 'seen'],
                   ]
 
     LEVEL_MANAGER = LevelManager(FPS=60,
@@ -145,13 +141,13 @@ if __name__ == "__main__":
 
                                  batch_reset='seed',
                                  screen_dimensions=(SCREEN_WIDTH, SCREEN_HEIGHT),
-                                 optional_script_build_args='percentage_ordered',
-                                 mode='train', capture_mode_override=False
+                                 optional_script_build_args='percentage',
+                                 mode='capture', capture_mode_override=False
                                  )
 
     # init image capture
     max_frames = LEVEL_MANAGER.compute_max_frames(capture_first_epoch_only=True)
-    filename = '../src_pycharm/data_seen_augment/'
+    filename = 'data_seen_unseen_dynamic'
 
     IMAGE_CAPTURE = ImageCapture(buffer_size=0.05, max_frames=max_frames, step_size=1,
                                  capture_first_epoch_only=True, capture_mode='save',
