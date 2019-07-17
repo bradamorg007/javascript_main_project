@@ -24,7 +24,8 @@ function preload() {
 }
 
 function setup() {
-	createCanvas(windowWidth * 0.7, windowHeight * 0.5);
+	// createCanvas(windowWidth * 0.7, windowHeight * 0.5);
+	createCanvas(200, 200)
 
 	// Make the Interface Stuff
 	slider = createSlider(1, 200, 1);
