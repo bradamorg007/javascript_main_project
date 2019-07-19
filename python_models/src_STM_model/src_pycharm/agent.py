@@ -93,13 +93,13 @@ class Agent(pygame.sprite.Sprite):
         if self.velocity < self.minLim:
             self.velocity = self.minLim
 
-        if self.rect.bottom > screen_height:
-            self.rect.bottom = screen_height
-            self.velocity = 0
-
-        elif self.rect.top < 5:
-            self.rect.top = 0
-            self.velocity = 0
+        # if self.rect.bottom > screen_height:
+        #     self.rect.bottom = screen_height
+        #     self.velocity = 0
+        #
+        # elif self.rect.top < 5:
+        #     self.rect.top = 0
+        #     self.velocity = 0
 
         # penalise agents for their distance on the y from the center of the gap of the blocks
         gap = closestBlock.bottom_block.rect.top - closestBlock.top_block.rect.bottom
@@ -111,6 +111,13 @@ class Agent(pygame.sprite.Sprite):
 
         self.fitness = self.fitness + 1
 
+    def off_screen(self, screen_height):
+        if self.rect.top < 5:
+            return True
+        elif self.rect.bottom > screen_height:
+            return True
+        else:
+            return False
 
     def minMaxNormalise(self, x):
         return (x - self.minLim) / (self.maxLim - self.minLim)
@@ -119,7 +126,7 @@ class Agent(pygame.sprite.Sprite):
     def computeFitness(self):
         # penalise agent based on average distance from gap
 
-        impactFactor = 0.5 # scales the percentage of penalisation applied
+        impactFactor = 0.9 # scales the percentage of penalisation applied
         self.avgDistFromGap = np.floor(self.totalDistanceFromGapOverTime / self.timeSamplesExperianced)
         self.fitness = self.fitness - np.floor(impactFactor * self.avgDistFromGap)
         if self.fitness < 0:

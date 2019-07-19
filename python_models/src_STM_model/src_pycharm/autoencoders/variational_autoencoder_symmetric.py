@@ -24,14 +24,14 @@ class VaritationalAutoEncoderSymmetric(AutoEncoder):
 
         # ENCODER ==================================================================================================
         x = layers.Conv2D(filters=32, kernel_size=(3, 3), activation='relu', padding='same')(input_img)
-        x = layers.Conv2D(filters=64, kernel_size=(3, 3), activation='relu', padding='same', strides=2)(x)
+        x = layers.Conv2D(filters=64, kernel_size=(3, 3), activation='relu', padding='same',  strides=2)(x)
         x = layers.Conv2D(filters=128, kernel_size=(3, 3), activation='relu', padding='same')(x)
-        x = layers.Conv2D(filters=128, kernel_size=(3, 3), activation='relu', padding='same')(x)
+        x = layers.Conv2D(filters=128, kernel_size=(3, 3), activation='relu', padding='same', strides=2)(x)
 
         shape_before_flattening = K.int_shape(x)
 
         x = layers.Flatten()(x)
-        x = layers.Dense(units=250, activation='relu')(x)
+        x = layers.Dense(units=50, activation='relu')(x)
 
         z_mean = layers.Dense(units=latent_space_dims, name='z_mean')(x)
         z_log_var = layers.Dense(units=latent_space_dims, name='z_log_var')(x)
@@ -58,14 +58,14 @@ class VaritationalAutoEncoderSymmetric(AutoEncoder):
         # DECODER =========================================================================================
         decoder_inputs = layers.Input(shape=K.int_shape(latent_space)[1:])
 
-        d = layers.Dense(units=250, activation='relu')(decoder_inputs)
+        d = layers.Dense(units=50, activation='relu')(decoder_inputs)
         d = layers.Dense(units=np.prod(shape_before_flattening[1:]), activation='relu')(d)
 
         d = layers.Reshape(target_shape=shape_before_flattening[1:])(d)
-        d = layers.Conv2DTranspose(filters=128, kernel_size=(3, 3), padding='same', activation='relu')(d)
-        d = layers.Conv2DTranspose(filters=128, kernel_size=(3, 3), padding='same', activation='relu')(d)
+        d = layers.Conv2DTranspose(filters=32, kernel_size=(3, 3), padding='same', activation='relu', strides=2)(d)
         d = layers.Conv2DTranspose(filters=64, kernel_size=(3, 3), padding='same', activation='relu')(d)
-        d = layers.Conv2DTranspose(filters=32, kernel_size=(3, 3), padding='same', activation='relu', strides=(2, 2))(d)
+        d = layers.Conv2DTranspose(filters=128, kernel_size=(3, 3), padding='same', activation='relu')(d)
+        d = layers.Conv2DTranspose(filters=128, kernel_size=(3, 3), padding='same', activation='relu', strides=(2, 2))(d)
 
         # OUTPUT IMAGE:
         decoded_img = layers.Conv2D(filters=1, kernel_size=(3, 3), padding='same',
@@ -116,16 +116,15 @@ class VaritationalAutoEncoderSymmetric(AutoEncoder):
 if __name__ == "__main__":
 
 
-    VAE = VaritationalAutoEncoderSymmetric(img_shape=(40, 40, 1), latent_dimensions=15, batch_size=128)
-    VAE.data_prep(directory_path='../AE_data/data_seen_unseen_dynamic/', skip_files=['.json'], data_index=0, label_index=1,
+    VAE = VaritationalAutoEncoderSymmetric(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=64)
+    VAE.data_prep(directory_path='../AE_data/data_0_static/', skip_files=['.json'], data_index=0, label_index=1,
                   normalize=True, remove_blanks=True, data_type='train')
 
-    VAE.filter(keep_labels=['seen-', 'unseen-'], data_type='train')
+    #VAE.filter(keep_labels=['seen-', 'unseen-'], data_type='train')
 
     VAE.map_labels_to_codes()
     VAE.show_label_codes()
     VAE.define_model()
-    VAE.train(epochs=50)
+    VAE.train(epochs=20)
     VAE.inspect_model()
-
-   # VAE.save(name='VAE', save_type='weights')
+    VAE.save(name='VAE_SYM2-1', save_type='weights')

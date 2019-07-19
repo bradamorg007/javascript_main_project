@@ -22,8 +22,8 @@ class CNN_DenseLatentSpace(AutoEncoder):
 
         x = layers.Conv2D(filters=32, kernel_size=(3, 3), activation='relu', padding='same')(input_img)
         x = layers.Conv2D(filters=64, kernel_size=(3, 3), activation='relu', padding='same', strides=2)(x)
-        x = layers.Conv2D(filters=64, kernel_size=(3, 3), activation='relu', padding='same')(x)
-        x = layers.Conv2D(filters=64, kernel_size=(3, 3), activation='relu', padding='same')(x)
+        x = layers.Conv2D(filters=128, kernel_size=(3, 3), activation='relu', padding='same')(x)
+        x = layers.Conv2D(filters=128, kernel_size=(3, 3), activation='relu', padding='same')(x)
 
         shape_before_flattening = K.int_shape(x)
         x = layers.Flatten()(x)
@@ -41,8 +41,8 @@ class CNN_DenseLatentSpace(AutoEncoder):
         d = layers.Dense(units=np.prod(shape_before_flattening[1:]), activation='relu')(d)
         d = layers.Reshape(target_shape=shape_before_flattening[1:])(d)
 
-        d = layers.Conv2DTranspose(filters=64, kernel_size=(3, 3), padding='same', activation='relu')(d)
-        d = layers.Conv2DTranspose(filters=64, kernel_size=(3, 3), padding='same', activation='relu')(d)
+        d = layers.Conv2DTranspose(filters=128, kernel_size=(3, 3), padding='same', activation='relu')(d)
+        d = layers.Conv2DTranspose(filters=128, kernel_size=(3, 3), padding='same', activation='relu')(d)
         d = layers.Conv2DTranspose(filters=64, kernel_size=(3, 3), padding='same', activation='relu', strides=2)(d)
         d = layers.Conv2DTranspose(filters=32, kernel_size=(3, 3), padding='same', activation='relu')(d)
 
@@ -78,8 +78,8 @@ class CNN_DenseLatentSpace(AutoEncoder):
 
 if __name__ == '__main__':
 
-    CNND = CNN_DenseLatentSpace(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=128)
-    CNND.data_prep(directory_path='../AE_data/data_seen_static/', skip_files=['.json'], data_index=0, label_index=1,
+    CNND = CNN_DenseLatentSpace(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=64)
+    CNND.data_prep(directory_path='../AE_data/data_0_static/', skip_files=['.json'], data_index=0, label_index=1,
                    normalize=True, remove_blanks=True, data_type='train')
 
     CNND.map_labels_to_codes()

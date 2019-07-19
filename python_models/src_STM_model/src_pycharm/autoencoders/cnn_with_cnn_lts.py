@@ -22,7 +22,6 @@ class CNN_ConvLatentSpace(AutoEncoder):
         x = layers.MaxPooling2D((2, 2), padding='same')(x)
 
         x = layers.Conv2D(64, (3, 3), activation='relu', padding='same')(x)
-        x = layers.MaxPooling2D((2, 2), padding='same')(x)
 
         x = layers.Conv2D(128, (3, 3), activation='relu', padding='same')(x)
         x = layers.Conv2D(128, (3, 3), activation='relu', padding='same')(x)
@@ -46,7 +45,7 @@ class CNN_ConvLatentSpace(AutoEncoder):
         x = layers.UpSampling2D((2, 2))(x)
 
         x = layers.Conv2D(64, (3, 3), activation='relu', padding='same')(x)
-        x = layers.UpSampling2D((2, 2))(x)
+
 
         x = layers.Conv2D(32, (3, 3), activation='relu', padding='same')(x)
         x = layers.UpSampling2D((2, 2))(x)
@@ -58,7 +57,7 @@ class CNN_ConvLatentSpace(AutoEncoder):
         z_decoded = decoder(latent_space)
 
         AE = Model(input_img, z_decoded)
-        AE.compile(optimizer='adadelta', loss='binary_crossentropy')
+        AE.compile(optimizer='rmsprop', loss='binary_crossentropy')
         AE.summary()
 
         encoder.compile(optimizer='rmsprop', loss='binary_crossentropy')

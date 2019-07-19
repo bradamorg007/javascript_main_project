@@ -304,7 +304,7 @@ class LevelManager:
         index = 0
         r = np.round(np.random.rand() * sum)
 
-        while r > 0:
+        while r >= 0:
             r = r - input[index][len(input[index])-2]
 
             if r > 0:

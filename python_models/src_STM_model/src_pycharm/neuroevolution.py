@@ -24,7 +24,7 @@ class NeuroEvolution:
                 agent.think(closest_block, level_manager.SCREEN_WIDTH, level_manager.SCREEN_HEIGHT)
                 agent.update(closest_block, level_manager.SCREEN_HEIGHT)
 
-                if closest_block.hit(agent):
+                if closest_block.hit(agent) or agent.off_screen(level_manager.SCREEN_HEIGHT):
                     agent.computeFitness()
                     agents.splice(i)
                     i -= 1

@@ -46,10 +46,20 @@ class GA:
         # // 3.) now I need to create a new population of children
 
         # i throw two darts to choose Parent A and B
+        # parent A gets chosen its fitness is set 0 afterwards to reduce the chance of it been selected as Parent B
+        # want to avoid same poarent breeding as it will destroy diversity
+        parentA_fitness = None
+        index = None
         for i in range(len(population)):
 
-            parentA = GA.selectParent(population, fitnessSum)
-            parentB = GA.selectParent(population, fitnessSum)
+            if i > 0:
+                population[index].fitness = parentA_fitness
+
+            parentA, index = GA.selectParent(population, fitnessSum)
+            parentA_fitness = parentA.fitness
+            population[index].fitness = 0
+
+            parentB, _, = GA.selectParent(population, fitnessSum)
             newPopulation.append(GA.reproduceAndMutate(parentA, parentB, screen_width, screen_height))
 
         return newPopulation
@@ -58,20 +68,35 @@ class GA:
     def selectParent(population, fitnessSum):
 
         index = 0
+        rand_select = False
         r = np.round(np.random.rand() * fitnessSum)
 
+        # if index is larger than len-1 then it means all agents have the same fitness probs 0
+        # if this is the case then all one can do is just randomly select one. will happen in
+        # the case hwre only one agent got a fitness greater than 0 but it can only be selected once after which its
+        # is set to 0 to allow other agentrs to be selected to avoid same parent breeding
+
         while r > 0:
+            if index > len(population)-1:
+                # random select
+                rand_select = True
+                #print('NOTIFICATION GA: All agents have the same fitness init random selection')
+                break
+
             r = r - population[index].fitness
 
             if r > 0:
                 index = index + 1
+
+        if rand_select:
+            index = np.random.randint(0, len(population)-1)
 
         parent = population[index]
 
         if parent == None:
             raise ValueError("ERROR GA: Parent in select parent method is undefined this is due to the indexing")
 
-        return parent
+        return parent, index
 
     @staticmethod
     def reproduceAndMutate(parentA, parentB, screen_width, screen_height):

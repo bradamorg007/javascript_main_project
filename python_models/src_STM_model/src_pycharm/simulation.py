@@ -3,6 +3,8 @@ from level_manager import LevelManager
 from agent_manager import AgentManager
 from neuroevolution import NeuroEvolution
 from image_capture import ImageCapture
+import os
+import pickle as pkl
 
 
 def run(population_size, cycles, level_manager, image_capture):
@@ -41,6 +43,27 @@ def run(population_size, cycles, level_manager, image_capture):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     END_SIM = True
+                elif event.key == pygame.K_s:
+                    # save best agent
+                    max = 0
+                    index = 0
+                    for i, agent in enumerate(agents.not_sprites):
+                        if agent.fitness > max:
+                            max = agent.fitness
+                            index = i
+                    folder = "sim_data"
+                    filename = os.path.join(folder, 'best_agent')
+                    if os.path.isdir(folder) == False:
+                        os.mkdir(folder)
+
+                    pkl.dump(agents.not_sprites[index].brain, open(os.path.join(filename), 'wb'))
+                    level_manager.folder_bin = folder
+                    level_manager.save_config(save_folder_path='sim_env')
+                    print('NOTIFICATION: Best Agent has been saved to %s' % filename)
+                    print('NOTIFICATION: simulation environment has been saved to %s' % 'sim_env.pkl')
+
+
+
 
 
         # cyles loop will capture all the game logic
@@ -109,29 +132,31 @@ def run(population_size, cycles, level_manager, image_capture):
 
 if __name__ == "__main__":
 
-    POPULATION_SIZE = 200
+    POPULATION_SIZE = 250
     CYLES = 1 # 1-200
     DRAW_SIM = True
 
     SCREEN_HEIGHT = 600
     SCREEN_WIDTH = 800
 
-    blueprints = [[50, 150, None, 100, 4, 49, 'unseen'],
-                  [400, 500, None, 100, 4, 51, 'seen'],
+    blueprints = [[350, 500, None, 100, 4, 0, 'unseen'],
+                  [50, 600, None, 100, 4, 100, 'unseen'],
+                  [50, 200, None, 100, 4, 0, 'unseen'],
+                  [520, 600, None, 100, 4, 0, 'seen'],
                   ]
 
     LEVEL_MANAGER = LevelManager(FPS=60,
-                                 game_len=300,
+                                 game_len=30,
                                  epochs=2,
-                                 number_of_blocks=100,
-                                 buffer_size=10,
+                                 number_of_blocks=10,
+                                 buffer_size=3,
                                  blueprints=blueprints,
 
                                  override_gap_size=100,
                                  override_block_width=100,
                                  override_block_speed=4,
 
-                                 data_augmentation=True,
+                                 data_augmentation=False,
                                  y_top_jitter_probability=0.5,
                                  y_top_jitter_amount=50,
                                  y_bottom_jitter_probability=0.5,
@@ -141,13 +166,13 @@ if __name__ == "__main__":
 
                                  batch_reset='seed',
                                  screen_dimensions=(SCREEN_WIDTH, SCREEN_HEIGHT),
-                                 optional_script_build_args='percentage',
-                                 mode='capture', capture_mode_override=False
+                                 optional_script_build_args='percentage_ordered',
+                                 mode='train', capture_mode_override=False
                                  )
 
     # init image capture
     max_frames = LEVEL_MANAGER.compute_max_frames(capture_first_epoch_only=True)
-    filename = 'data_seen_unseen_dynamic'
+    filename = 'data_5_static'
 
     IMAGE_CAPTURE = ImageCapture(buffer_size=0.05, max_frames=max_frames, step_size=1,
                                  capture_first_epoch_only=True, capture_mode='save',

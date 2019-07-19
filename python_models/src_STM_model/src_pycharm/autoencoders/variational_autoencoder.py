@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
 
     VAE = VaritationalAutoEncoder(img_shape=(40, 40, 1), latent_dimensions=3, batch_size=128)
-    VAE.data_prep(directory_path='../AE_data/data_seen_dynamic/', skip_files=['.json'], data_index=0, label_index=1,
+    VAE.data_prep(directory_path='../AE_data/data_seen_static/', skip_files=['.json'], data_index=0, label_index=1,
                   normalize=True, remove_blanks=True, data_type='train')
 
     VAE.map_labels_to_codes()
