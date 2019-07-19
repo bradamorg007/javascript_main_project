@@ -1,239 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3f530246-a66a-4278-a522-5daf2e8c0135" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/autoencoders/fully_connected.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_14" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_15" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_16" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_17" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_18" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_19" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/batch_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/image_capture_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_dynamic/level_manager_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_14" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_15" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_16" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_17" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_18" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_19" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_static/batch_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_14" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_15" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_16" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_17" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_18" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_19" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/batch_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/image_capture_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_seen_unseen_dynamic/level_manager_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_14" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_15" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_16" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_17" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_18" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_19" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen2_static/batch_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_14" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_15" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_16" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_17" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_18" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_19" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen3_static/batch_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_14" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_15" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_16" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_17" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_18" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_19" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/batch_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/image_capture_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_300_400_dynamic/level_manager_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_14" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_15" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_16" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_17" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_18" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_19" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/batch_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/image_capture_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_350_450_dynamic/level_manager_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_14" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_15" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_16" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_17" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_18" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_19" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/batch_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/image_capture_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_50_150_dynamic/level_manager_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_14" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_15" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_16" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_17" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_18" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_19" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AE_data/data_unseen_static/batch_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/AE_LAB.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/AE_LAB.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/cnn_with_cnn_lts.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/cnn_with_cnn_lts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/cnn_with_dense_lts.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/cnn_with_dense_lts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/models/CNN/weights_decoder_model.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/models/CNN/weights_encoder_model.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/models/CNN/weights_model.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/models/CNND/weights_decoder_model.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/models/CNND/weights_encoder_model.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/models/CNND/weights_model.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/variational_autoencoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/variational_autoencoder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoders/variational_autoencoder_symmetric.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoders/variational_autoencoder_symmetric.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/batch_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/image_capture_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_seen_static/level_manager_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_unseen2_static/image_capture_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_unseen2_static/level_manager_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_unseen3_static/image_capture_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_unseen3_static/level_manager_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_unseen_static/image_capture_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_unseen_static/level_manager_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/level_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/level_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neuroevolution.py" beforeDir="false" afterPath="$PROJECT_DIR$/neuroevolution.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/simulation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sketch.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/t.py" beforeDir="false" />
-    </list>
+    <list default="true" id="3f530246-a66a-4278-a522-5daf2e8c0135" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,7 +13,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/simulation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="821">
+            <state relative-caret-position="623">
               <caret line="169" column="44" selection-start-line="169" selection-start-column="44" selection-end-line="169" selection-end-column="44" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -257,7 +25,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/level_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
+            <state relative-caret-position="7884">
               <caret line="441" column="22" selection-start-line="441" selection-start-column="22" selection-end-line="441" selection-end-column="22" />
             </state>
           </provider>
@@ -266,7 +34,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="832">
+            <state relative-caret-position="1116">
               <caret line="64" column="45" selection-start-line="64" selection-start-column="45" selection-end-line="64" selection-end-column="45" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -336,7 +104,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -353,6 +120,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -806,10 +574,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/agent.py">
+    <entry file="file://$PROJECT_DIR$/sim_data/sim_env/level_manager_config.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="832">
-          <caret line="64" column="45" selection-start-line="64" selection-start-column="45" selection-end-line="64" selection-end-column="45" />
+        <state relative-caret-position="-189" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simulation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="623">
+          <caret line="169" column="44" selection-start-line="169" selection-start-column="44" selection-end-line="169" selection-end-column="44" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -818,20 +591,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/level_manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
+        <state relative-caret-position="7884">
           <caret line="441" column="22" selection-start-line="441" selection-start-column="22" selection-end-line="441" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sim_data/sim_env/level_manager_config.json">
+    <entry file="file://$PROJECT_DIR$/agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-189" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simulation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="821">
-          <caret line="169" column="44" selection-start-line="169" selection-start-column="44" selection-end-line="169" selection-end-column="44" />
+        <state relative-caret-position="1116">
+          <caret line="64" column="45" selection-start-line="64" selection-start-column="45" selection-end-line="64" selection-end-column="45" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
